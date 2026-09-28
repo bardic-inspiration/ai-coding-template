@@ -52,10 +52,12 @@ long accounts of rejected alternatives (the PR).
   is replaced, never struck through or annotated.
 - **Testable.** Every behavioral statement can become an acceptance criterion.
   If it can't, it isn't precise enough yet.
-- **Rationale in a line, deliberation in the PR.** A non-obvious rule may carry
-  a one- or two-line `Why:` so nobody relitigates it by accident. The options
-  weighed and the debate go in the PR description, which becomes the squash
-  commit body ([`pr-standards.md`](pr-standards.md)).
+- **Rationale in a line, deliberation in the PR.** A rule that looks arbitrary
+  or easy to reverse carries a one- or two-line `Why:` — naming the obvious
+  alternative, if it was rejected — so nobody undoes it by accident. Size is
+  no guide: a one-line rule can rest on a large decision. The options weighed
+  and the debate go in the PR description, which becomes the squash commit
+  body ([`pr-standards.md`](pr-standards.md)).
 - **Say when something isn't built yet.** Everything in the spec is true of
   `main`, except text marked **`Planned (plan NNNN):`**. The PR that makes it
   true removes the marker. During a greenfield build, the header's
@@ -83,8 +85,10 @@ long accounts of rejected alternatives (the PR).
 - **Disagreement is a bug.** If code and spec disagree on `main`, one of them
   is wrong: file an issue, decide which, and fix that one.
 - **History is in git.** `git log -- SPEC.md` lists every spec change — one
-  squash commit per PR, with its why in the body. There is no changelog file,
-  amendment table, or spec version. Surfaces that outside code depends on are
+  squash commit per PR, with its why in the body. To find why a line says
+  what it does, `git blame` it (or `git log -S '<phrase>' -- SPEC.md`): the
+  commit's body gives the reasoning, and its `(#N)` leads to the PR and issue.
+  There is no changelog file, amendment table, or spec version. Surfaces that outside code depends on are
   versioned individually ([`commit-standards.md`](commit-standards.md)
   "Versioned surfaces").
 
