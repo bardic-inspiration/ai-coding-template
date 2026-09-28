@@ -22,8 +22,8 @@ contributor runs but CI doesn't — erodes that.
    mirrors it. CI has no private checks, and every gate command runs in CI.
    A change to one side is a change to both, in the same PR.
 3. **Be the merge gate.** `gate` and `pr-title` are both required status
-   checks under branch protection, and red is never merged. Tests are never skipped, disabled, or
-   marked `continue-on-error` to get green.
+   checks under branch protection, and red is never merged. Tests are never
+   skipped, disabled, or marked `continue-on-error` to get green.
 4. **Never pass vacuously.** A stage that isn't wired up announces itself with
    a notice. Once the project has code, `GATE_REQUIRED` is `"true"`, and an
    empty lint or test command fails the job.

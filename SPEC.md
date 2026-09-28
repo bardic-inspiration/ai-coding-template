@@ -59,7 +59,8 @@ versioned (docs/commit-standards.md "Versioned surfaces"). -->
 ## Behavior
 
 <!-- TEMPLATE: rules, state transitions, and error cases, at the precision a
-test can be written from. A non-obvious rule may carry a one-line `Why:`. -->
+test can be written from. When a rule needs a `Why:` line, see
+docs/spec-driven-development.md "Writing it". -->
 
 ## Quality bars
 

@@ -23,8 +23,8 @@ and code. Every doc that names the same thing uses the same spelling
 - **Labels:** lowercase, colon-scoped where hierarchical (`task`, `bug`,
   `needs-discussion`, `area:parser`) — the label set lives in
   [`issue-standards.md`](issue-standards.md) "Labels".
-- **Stable IDs** that docs cite (invariants, decisions): short uppercase prefix
-  plus number — `INV-3`, `D2`. Never reuse or renumber an ID; retire it.
+- **Stable IDs** that docs cite (invariants): short uppercase prefix plus
+  number — `INV-3`. Never reuse or renumber an ID; retire it.
 
 ## Code
 

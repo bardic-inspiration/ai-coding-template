@@ -1,9 +1,14 @@
 # CLAUDE.md
 
-Claude Code–specific notes. **Read [`AGENTS.md`](AGENTS.md) first** — it is
-the canonical guide (purpose, hard rules, layout, working loop, and the PR and
-scope discipline that apply to every session, cold start or not). This file
-adds only the conventions specific to Claude Code's tools and interface.
+Claude Code–specific notes. [`AGENTS.md`](AGENTS.md) is the canonical guide
+(purpose, hard rules, layout, working loop, and the PR and scope discipline
+that apply to every session). Claude Code loads only this file on its own, so
+it imports the guide here — every session starts with it in context:
+
+@AGENTS.md
+
+This file adds only the conventions specific to Claude Code's tools and
+interface.
 
 ## Asking questions
 

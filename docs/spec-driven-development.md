@@ -88,8 +88,8 @@ long accounts of rejected alternatives (the PR).
   squash commit per PR, with its why in the body. To find why a line says
   what it does, `git blame` it (or `git log -S '<phrase>' -- SPEC.md`): the
   commit's body gives the reasoning, and its `(#N)` leads to the PR and issue.
-  There is no changelog file, amendment table, or spec version. Surfaces that outside code depends on are
-  versioned individually ([`commit-standards.md`](commit-standards.md)
+  There is no changelog file, amendment table, or spec version. Surfaces
+  that outside code depends on are versioned individually ([`commit-standards.md`](commit-standards.md)
   "Versioned surfaces").
 
 ## Plans

@@ -86,9 +86,10 @@ These enforce the rules the docs state; they're repository settings, not files.
       is what makes each PR one legible commit on `main`
       ([`docs/commit-standards.md`](docs/commit-standards.md)). Turn on
       "Automatically delete head branches."
-- [ ] **Branch ruleset on `main`:** require a pull request; require the `gate`
-      and `pr-title` status checks; require linear history; block force pushes
-      and deletion.
+- [ ] **Branch ruleset on `main`:** require a pull request with **0 required
+      approvals** (GitHub won't let you approve your own PR — for a solo
+      maintainer, the merge is the review); require the `gate` and `pr-title`
+      status checks; require linear history; block force pushes and deletion.
 - [ ] **Actions:** default workflow permissions read-only.
 - [ ] **Issues:** templates are picked up from `.github/ISSUE_TEMPLATE/`;
       blank issues are disabled by `config.yml`.

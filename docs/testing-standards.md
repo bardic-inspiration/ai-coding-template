@@ -64,9 +64,8 @@ PR's Testing section, with screenshots
 
 - The full suite is **green**. No skipped tests, unless marked with a reason in
   the code and justified in the PR.
-- New behavior ships with its tests, in the same commit
-  ([`commit-standards.md`](commit-standards.md)).
-- Hard-rule tests pass.
+- New behavior ships with its tests, in the same PR.
+- Invariant tests pass.
 - CI runs the whole gate and must be green before merge
   ([`ci-standards.md`](ci-standards.md)). Markdown-only changes skip this
   ([`docs-only-changes.md`](docs-only-changes.md)).
