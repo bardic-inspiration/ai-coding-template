@@ -1,14 +1,22 @@
 # CLAUDE.md
 
-Claude Code–specific notes. [`AGENTS.md`](AGENTS.md) is the canonical guide
-(purpose, hard rules, layout, working loop, and the PR and scope discipline
-that apply to every session). Claude Code loads only this file on its own, so
-it imports the guide here — every session starts with it in context:
+Claude Code–specific notes. [`AGENTS.md`](AGENTS.md) is the canonical guide,
+written to work with any agent; Claude Code loads only this file on its own,
+so it imports the guide here:
 
 @AGENTS.md
 
-This file adds only the conventions specific to Claude Code's tools and
-interface.
+This file adds only what's specific to Claude Code.
+
+## Watching PRs
+
+After opening a PR, subscribe to its activity (`subscribe_pr_activity`) and
+end the turn. CI results, review comments, and merge conflicts wake the
+session; handle each one as [`docs/workflow.md`](docs/workflow.md) "Watching
+CI" says. Unsubscribe once the PR is merged or closed.
+
+Without that tool (a local session), check before handing back:
+`gh pr checks <number> --watch`.
 
 ## Asking questions
 
@@ -18,12 +26,12 @@ interface.
 - **Never** use the app's multiple-choice/question-picker widgets — always ask
   in plain chat text instead.
 
-## CI watch protocol
+## Configuration
 
-- **Never watch.** Do not call `subscribe_pr_activity` on any PR you open,
-  regardless of whether it touches code or is docs-only. Cold-start sessions
-  have no memory of prior runs, so a subscription left open has nobody to act
-  on it between sessions — open the PR and end the turn.
+| File | What it does |
+|---|---|
+| [`.claude/settings.json`](.claude/settings.json) | Pre-approves `check`, the test command, and read-only git, so sessions don't stop for permission. Blocks force-pushes and reading `.env` files — the common forms; the branch ruleset on GitHub is the real guard for `main`. |
+| [`.claude/hooks/session-start.sh`](.claude/hooks/session-start.sh) | In cloud sessions, installs dependencies at startup so `check` can run. |
 
 ## Skills
 

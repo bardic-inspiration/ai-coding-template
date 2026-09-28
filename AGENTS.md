@@ -5,134 +5,126 @@ agents or humans. If another doc disagrees with this one, this one wins —
 except that [`SPEC.md`](SPEC.md) is the source of truth for *what to build*;
 this file is the source of truth for *how to work*.
 
-Work here is done by **memoryless, cold-start sessions** — often scheduled,
-often unattended. Nothing carries over between sessions except what is in the
-repo and on GitHub (issues, PRs, review threads), so every rule below exists to
-make one session's work legible to the next. Read order for a cold start:
-**this file → the `SPEC.md` sections your issue cites → your issue's
-acceptance criteria → the docs the
-[routing table](#protocol-docs--read-when) sends you to.**
+Work is done by AI sessions that start with no memory of earlier ones.
+Nothing carries over except what's in the repo and on GitHub — issues, PRs,
+review threads, and the commit history — so every rule below exists to make
+one session's work legible to the next.
 
----
-
-## 1. Purpose & scope
+## Purpose & scope
 
 What the project is, and what it deliberately isn't, lives in one place:
-[`SPEC.md`](SPEC.md) "Purpose & non-goals". Work in flight beyond single
-issues is in [`docs/plans/`](docs/plans/README.md).
+[`SPEC.md`](SPEC.md) "Purpose & non-goals". Work bigger than one PR is
+sequenced by the active plans in [`docs/plans/`](docs/plans/README.md).
 
-## 2. Hard rules
+## How work happens
 
-These hold for every change, whatever the issue says. A change that breaks one
+Two modes, one standard. Every change reaches `main` the same way — a PR, a
+green check, a human merge — whichever mode produced it.
+
+| | Interactive session | Routine |
+|---|---|---|
+| Who's there | The user, in the loop | Nobody, until review |
+| Where the task comes from | Chat, or an issue | An issue: handed to it, or the next in the queue |
+| Where the task is recorded | The PR description — file an issue only for work this session won't do | The issue |
+| When blocked | Ask the user | Say so on the issue or PR, and stop |
+| After opening the PR | Watch CI to green, and report | Watch CI to green |
+
+The thread through both: **the task is the prompt, the PR is the response,
+review is the evaluation, and the squash commit on `main` is the record.**
+
+## Hard rules
+
+These hold for every change, whatever the task says. A change that breaks one
 is wrong even if CI is green.
 
 - **Red CI is never merged**, and tests are never skipped, disabled, or
-  weakened to get green ([`docs/ci-standards.md`](docs/ci-standards.md)).
-- **Don't silently invent behavior.** If the spec or the issue is ambiguous
-  or looks wrong, resolve it in the spec rather than guessing in code (§6).
+  weakened to get green ([`docs/ci.md`](docs/ci.md)).
+- **Don't silently invent behavior.** If the spec or the task is ambiguous or
+  looks wrong, resolve it in the spec rather than guessing in code.
 - **The project's invariants hold** — [`SPEC.md`](SPEC.md) "Invariants".
-- **One issue, one PR, its acceptance criteria only**
-  ([`docs/scope-discipline.md`](docs/scope-discipline.md)).
-- **The repo is the memory.** Decisions, follow-ups, and open questions go into
-  docs, issues, and PR descriptions — never only into a chat transcript the next
+- **One concern per PR**, and only what its task asks for
+  ([`docs/workflow.md`](docs/workflow.md) "Scope").
+- **A PR you open is yours until it's merged or closed** — watch its CI and
+  fix what fails ([`docs/workflow.md`](docs/workflow.md) "Watching CI").
+- **The repo is the memory.** Decisions, follow-ups, and open questions go
+  into the spec, issues, and PR descriptions — never only into a chat the next
   session can't see.
 
-## 3. Repo layout
+## Repo layout
 
 <!-- TEMPLATE: extend the tree with the project's own top-level directories.
-Mark anything that doesn't exist yet as "(planned)" — build only what your
-issue calls for. -->
+Mark anything that doesn't exist yet as "(planned)". -->
 
 ```
 /
 ├── AGENTS.md          # this file — how to work
 ├── SPEC.md            # what to build
-├── CLAUDE.md          # Claude Code–specific notes
-├── CONTRIBUTING.md    # setup and mechanics for humans
-├── docs/              # protocol & standards docs (routing table in §4)
+├── CLAUDE.md          # Claude Code: imports this file, adds tool specifics
+├── CONTRIBUTING.md    # setup for humans
+├── docs/              # protocol docs (routing table below)
 │   └── plans/         # active plans only — deleted when done
-├── .claude/skills/    # project skills for Claude Code
-└── .github/           # CI workflow, issue & PR templates
+├── .claude/           # Claude Code settings, hooks, skills
+└── .github/           # CI, Dependabot, issue & PR templates
 ```
 
-## 4. Working loop (every issue)
+## Working loop
 
-1. **Take one issue.** If you were handed one, work it. Otherwise take the next
-   one from the queue ([`docs/issue-standards.md`](docs/issue-standards.md)
-   "Picking up an issue"). Scope your work to that issue only.
-2. **Read before you write.** Read the issue, the `SPEC.md` sections it
-   cites, and every other doc it references before touching code. The
-   acceptance criteria are your pre-written failing tests. `git log` on the
-   files you'll touch is context too: each commit on `main` is one whole PR,
-   with its why in the body.
-3. **Test first.** Write a failing test (red), the minimal code to pass
-   (green), then refactor — per behavior, not per module
-   ([`docs/testing-standards.md`](docs/testing-standards.md)).
-4. **Gate before commit.** The gate commands (§5) must be green locally. CI
-   runs the same commands and must pass before merge.
-5. **Commit atomically**, in Conventional Commits format
-   ([`docs/commit-standards.md`](docs/commit-standards.md)).
-6. **Open one PR per issue.** When the session's work is ready, open the PR —
-   work is picked up by unattended sessions, so nobody is watching to ask for
-   one. (Exception: you're explicitly told not to.) If the PR changes
-   behavior, it updates `SPEC.md` too. Fill in the template and link the
-   issue with `Closes #N`
-   ([`docs/pr-standards.md`](docs/pr-standards.md)).
+1. **Take one task.** Interactive: from chat, or an issue. Routine: the issue
+   you were handed, or the next in the queue
+   ([`docs/workflow.md`](docs/workflow.md) "The queue").
+2. **Read before you write:** the task, the `SPEC.md` sections it cites, and
+   every doc it references. `git log` on the files you'll touch is context
+   too — each commit on `main` is one whole PR, with its why in the body.
+3. **Branch from `main`** ([`docs/workflow.md`](docs/workflow.md) "Branches").
+4. **Test first.** A failing test, the minimal code to pass it, then refactor
+   ([`docs/testing.md`](docs/testing.md)).
+5. **Run `check`** (Commands, below). Green before every push.
+6. **Open one PR.** Its title and description become the commit on `main`
+   ([`docs/workflow.md`](docs/workflow.md) "Pull requests"). If it changes
+   behavior, it updates `SPEC.md` too.
+7. **Watch it to green** — fix red CI and conflicts on the same branch, answer
+   review. A human merges.
 
-Changing only Markdown — no code? Steps 3–4 don't apply; use the leaner path in
-[`docs/docs-only-changes.md`](docs/docs-only-changes.md).
+Changing only Markdown? Steps 4–5 don't apply
+([`docs/workflow.md`](docs/workflow.md) "Docs-only changes").
 
 ### Protocol docs — read when
-
-The working loop routes to these standards docs. Read each when its trigger
-fires — you don't need all of them for every issue.
 
 | Read | When |
 |---|---|
 | [`docs/spec-driven-development.md`](docs/spec-driven-development.md) | Reading, writing, or changing `SPEC.md`; the spec is silent or wrong; a change is too big for one PR. |
 | [`docs/plans/README.md`](docs/plans/README.md) | Proposing a plan, opening or closing a phase, or finishing a plan. |
-| [`docs/issue-standards.md`](docs/issue-standards.md) | Picking up, filing, scoping, or closing an issue; something out of scope surfaces mid-work. |
-| [`docs/testing-standards.md`](docs/testing-standards.md) | Writing the failing test (step 3). |
-| [`docs/commit-standards.md`](docs/commit-standards.md) | Writing a commit message (step 5); how history on `main` is shaped. |
-| [`docs/pr-standards.md`](docs/pr-standards.md) | Branching, the pre-flight checklist, writing the PR title and description (they become the commit on `main`), screenshots, review (step 6). |
-| [`docs/ci-standards.md`](docs/ci-standards.md) | Changing the CI workflow or the gate commands; CI fails in a way you don't understand. |
-| [`docs/scope-discipline.md`](docs/scope-discipline.md) | Tempted to fold in adjacent work — why each PR stays tight to its issue. |
-| [`docs/docs-only-changes.md`](docs/docs-only-changes.md) | Your change touches only Markdown — no code (skips steps 3–4). |
-| [`docs/documentation-standards.md`](docs/documentation-standards.md) | Writing or editing any doc — source of truth, routing, keep-in-sync, and style rules. |
-| [`docs/naming-conventions.md`](docs/naming-conventions.md) | Naming a file, doc, branch, label, or code identifier. |
-| [`docs/doc-audit.md`](docs/doc-audit.md) | Reconciling the doc set for staleness and drift. |
+| [`docs/workflow.md`](docs/workflow.md) | Anything Git or GitHub: taking or filing an issue, scope, branching, committing, opening or watching a PR, merging, docs-only changes. |
+| [`docs/testing.md`](docs/testing.md) | Writing tests. |
+| [`docs/ci.md`](docs/ci.md) | Changing CI or `check`; CI fails in a way you don't understand. |
+| [`docs/documentation.md`](docs/documentation.md) | Writing or editing any doc, naming files, auditing docs for drift. |
 
-## 5. Commands
+## Commands
 
-<!-- TEMPLATE: fill in from the project's stack (a stack module supplies these
-— see TEMPLATE.md). Use "—" for a task the stack doesn't have. -->
+<!-- TEMPLATE: fill in from the project's stack (a stack module supplies
+these — see TEMPLATE.md). -->
 
 | Task | Command |
 |---|---|
 | Install | `{{INSTALL_CMD}}` |
-| Lint | `{{LINT_CMD}}` |
-| Format (check) | `{{FORMAT_CHECK_CMD}}` |
-| Typecheck | `{{TYPECHECK_CMD}}` |
-| Test | `{{TEST_CMD}}` |
-| Build | `{{BUILD_CMD}}` |
-| Run | `{{RUN_CMD}}` |
+| **Check — the gate** | `{{CHECK_CMD}}` |
+| Fix formatting and autofixable lint | `{{FIX_CMD}}` |
+| Run one test, or a few | `{{TEST_CMD}}` |
+| Run the project | `{{RUN_CMD}}` |
 
-**The gate** is every row from Lint through Build. CI runs exactly these
-commands: the `env:` block at the top of
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml) mirrors this table, and
-a change to one is a change to both, in the same PR
-([`docs/ci-standards.md`](docs/ci-standards.md)).
+`check` runs everything the gate requires — lint, format check, typecheck,
+tests, build, whatever the stack has — and never modifies files. CI runs this
+one command ([`docs/ci.md`](docs/ci.md)), so green locally means green in CI.
 
-## 6. When in doubt
+## When in doubt
 
 - **The spec is silent, ambiguous, or wrong** → don't guess. If proceeding
-  means guessing at behavior or risking a hard rule (§2), stop: add an open
-  question to `SPEC.md`, raise it on the issue/PR, and resolve it by editing
-  the spec before writing code that depends on it
+  means guessing at behavior or risking an invariant, stop: add an open
+  question to `SPEC.md`, raise it (with the user, or on the issue), and
+  resolve it by editing the spec before writing code that depends on it
   ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)).
-- **Adjacent work** — an edge case, a follow-on idea, tech debt — gets filed as
-  its own issue ([`docs/issue-standards.md`](docs/issue-standards.md)), not
-  solved inline, left as a `TODO`, or folded into the current PR.
-- **Doc drift you spot while working** → fix it in a separate docs-only PR, or
-  file it; don't leave it, and don't fold it into an unrelated change
-  ([`docs/doc-audit.md`](docs/doc-audit.md)).
+- **Adjacent work** — an edge case, a follow-on idea, tech debt — becomes its
+  own issue, not a `TODO` and not part of this PR
+  ([`docs/workflow.md`](docs/workflow.md) "Scope").
+- **Doc drift you spot while working** → fix it in a separate docs-only PR,
+  or file it ([`docs/documentation.md`](docs/documentation.md) "Doc audit").

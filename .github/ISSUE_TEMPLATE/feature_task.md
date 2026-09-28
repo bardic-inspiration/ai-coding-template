@@ -8,7 +8,7 @@ assignees: ""
 
 <!--
 One issue = one PR = one logical change. If it won't fit in one PR, split it
-before filing. See docs/issue-standards.md.
+before filing. See docs/workflow.md.
 -->
 
 ## Goal

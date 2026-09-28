@@ -1,20 +1,9 @@
-# CI — stack-agnostic merge gate.
+# CI — the merge gate. docs/ci.md says what it must do, and why.
 #
-# docs/ci-standards.md defines what this workflow must accomplish and why;
-# this file implements that contract. A stack module fills in the commands and
-# the toolchain setup step — it never changes the contract.
-#
-# How it activates:
-#   - The gate commands live in the env block below and mirror AGENTS.md §5.
-#     An empty command means that stage isn't wired up yet: it is skipped with
-#     a notice, so CI is green on the process-only baseline and each stage
-#     switches on the moment its command is filled in.
-#   - Once the project has code to check, set GATE_REQUIRED to "true". From
-#     then on an empty LINT_CMD or TEST_CMD fails the job instead of passing
-#     vacuously.
-#   - A Markdown-only diff skips install and the code gate (docs-only fast
-#     path, docs/docs-only-changes.md). The job still runs and reports green,
-#     so it can be a required status check.
+# The gate is one command, `check` (AGENTS.md "Commands"), that you, agents,
+# and CI all run. Plan 0001's Phase 0 wires it in below: toolchain setup,
+# install, check. A Markdown-only diff skips all three, but the job still runs
+# and reports green, so `gate` can be a required status check.
 
 name: CI
 
@@ -31,31 +20,10 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  # TEMPLATE: keep in sync with the command table in AGENTS.md §5.
-  GATE_REQUIRED: "false"
-  INSTALL_CMD: ""
-  LINT_CMD: ""
-  FORMAT_CHECK_CMD: ""
-  TYPECHECK_CMD: ""
-  TEST_CMD: ""
-  BUILD_CMD: ""
-  # Checks that run on every change, docs-only included (a link check, a
-  # doc-matches-code check). They run before INSTALL_CMD, so they must not
-  # depend on installed dependencies.
-  DOCS_CHECK_CMD: ""
-
 jobs:
   gate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    # TEMPLATE: a stack module may add a runtime-version matrix here, e.g.
-    #   strategy:
-    #     fail-fast: false
-    #     matrix:
-    #       runtime-version: ["<previous LTS>", "<current LTS>"]
-    # Remember a matrix renames the check ("gate (22)"), which matters for
-    # branch protection's required status checks.
     steps:
       - uses: actions/checkout@v4
         with:
@@ -93,64 +61,15 @@ jobs:
             echo "docs_only=false" >> "$GITHUB_OUTPUT"
           else
             echo "docs_only=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::Markdown-only diff — skipping install and the code gate (docs/docs-only-changes.md)."
+            echo "::notice::Markdown-only diff — skipping setup and check (docs/ci.md)."
           fi
 
-      - name: Check gate configuration
-        shell: bash
-        run: |
-          for stage in INSTALL LINT FORMAT_CHECK TYPECHECK TEST BUILD DOCS_CHECK; do
-            var="${stage}_CMD"
-            if [ -z "${!var}" ]; then
-              echo "::notice::$var is not set — that stage is inactive (AGENTS.md §5, docs/ci-standards.md)."
-            fi
-          done
-
-          if [ "$GATE_REQUIRED" = "true" ]; then
-            for var in LINT_CMD TEST_CMD; do
-              if [ -z "${!var}" ]; then
-                echo "::error::GATE_REQUIRED is true but $var is empty — CI would pass vacuously. Fill it in (AGENTS.md §5)."
-                exit 1
-              fi
-            done
-          fi
-
-      - name: Docs checks
-        if: env.DOCS_CHECK_CMD != ''
-        shell: bash
-        run: eval "$DOCS_CHECK_CMD"
-
-      # TEMPLATE: toolchain setup. A stack module inserts its setup step(s)
-      # here — a language runtime, a dependency cache — guarded like the gate
-      # stages below so docs-only changes stay fast:
-      #   if: steps.changes.outputs.docs_only != 'true'
-
-      - name: Install
-        if: steps.changes.outputs.docs_only != 'true' && env.INSTALL_CMD != ''
-        shell: bash
-        run: eval "$INSTALL_CMD"
-
-      - name: Lint
-        if: steps.changes.outputs.docs_only != 'true' && env.LINT_CMD != ''
-        shell: bash
-        run: eval "$LINT_CMD"
-
-      - name: Format check
-        if: steps.changes.outputs.docs_only != 'true' && env.FORMAT_CHECK_CMD != ''
-        shell: bash
-        run: eval "$FORMAT_CHECK_CMD"
-
-      - name: Typecheck
-        if: steps.changes.outputs.docs_only != 'true' && env.TYPECHECK_CMD != ''
-        shell: bash
-        run: eval "$TYPECHECK_CMD"
-
-      - name: Test
-        if: steps.changes.outputs.docs_only != 'true' && env.TEST_CMD != ''
-        shell: bash
-        run: eval "$TEST_CMD"
-
-      - name: Build
-        if: steps.changes.outputs.docs_only != 'true' && env.BUILD_CMD != ''
-        shell: bash
-        run: eval "$BUILD_CMD"
+      # TEMPLATE: Phase 0 replaces the step below with the stack's gate, each
+      # step guarded by `if: steps.changes.outputs.docs_only != 'true'`:
+      #   1. toolchain setup, version pinned, with dependency caching
+      #      (e.g. actions/setup-node with node-version-file and cache: npm)
+      #   2. install from the lockfile (e.g. `npm ci`)
+      #   3. the check command (e.g. `npm run check`)
+      - name: Gate not wired yet
+        if: steps.changes.outputs.docs_only != 'true'
+        run: echo "::warning::The gate isn't wired yet — plan 0001 Phase 0 adds toolchain setup, install, and check (docs/ci.md)."

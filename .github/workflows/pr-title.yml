@@ -1,7 +1,6 @@
 # PR title — the title becomes the subject of the squash commit on main, so
-# it must be a Conventional Commits subject (docs/commit-standards.md,
-# docs/pr-standards.md "The PR is the record", docs/ci-standards.md
-# "PR title check").
+# it must be a Conventional Commits subject (docs/workflow.md "Commits",
+# docs/ci.md "PR title check").
 #
 # The title is untrusted input: it reaches the script only through env, and
 # is never echoed at the start of a log line.
@@ -31,14 +30,14 @@ jobs:
           TITLE: ${{ github.event.pull_request.title }}
           NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          # Keep in sync with the type list in docs/commit-standards.md.
+          # Keep in sync with the type list in docs/workflow.md "Commits".
           types='feat|fix|docs|test|refactor|chore|ci|build|style'
           form="^($types)(\([a-z0-9][a-z0-9._/-]*\))?!?: [^[:space:]]"
           subject="$TITLE (#$NUMBER)"
           max=72
 
           fail() {
-            echo "::error title=PR title::$1 See docs/commit-standards.md."
+            echo "::error title=PR title::$1 See docs/workflow.md."
             echo "Current title -> $TITLE"
             exit 1
           }

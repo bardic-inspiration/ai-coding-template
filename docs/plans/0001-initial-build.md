@@ -25,16 +25,21 @@ finishes, then `status: current`.
 
 **Build:**
 
-- The toolchain and the repo layout in [`AGENTS.md`](../../AGENTS.md) §3.
-- The gate commands, filled in `AGENTS.md` §5 and mirrored in the `env:` block
-  of `.github/workflows/ci.yml`.
+- The toolchain, and the repo layout in [`AGENTS.md`](../../AGENTS.md) "Repo
+  layout".
+- `check`, defined in the stack's task runner, and the commands in
+  `AGENTS.md` "Commands".
+- The gate in `.github/workflows/ci.yml` — toolchain setup, install, `check` —
+  replacing the "Gate not wired yet" step ([`ci.md`](../ci.md)).
+- The install step in `.claude/hooks/session-start.sh`, and the stack's
+  ecosystem in `.github/dependabot.yml`.
 
 **Exit:**
 
-- [ ] Install and every gate command run green locally on an empty or trivial
-      test suite.
-- [ ] CI runs them with `GATE_REQUIRED: "true"`, and is green.
-- [ ] The repo layout matches `AGENTS.md` §3.
+- [ ] `check` runs green locally on an empty or trivial test suite.
+- [ ] CI runs `check` and is green, with no "gate not wired" warning.
+- [ ] A fresh cloud session can run `check` with no manual setup.
+- [ ] The repo layout matches `AGENTS.md` "Repo layout".
 
 ### Phase 1 — {{PHASE_1_NAME}}
 

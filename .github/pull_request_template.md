@@ -2,9 +2,9 @@
 This description becomes the body of the squash commit on main, and the title
 becomes its subject — write both for someone reading `git log` a year from now.
 Title: `type(scope): imperative subject`, ≤ 72 characters including the " (#N)"
-GitHub appends. See docs/pr-standards.md "The PR is the record".
+GitHub appends. See docs/workflow.md "The PR is the record".
 
-Before opening, run the pre-flight checklist in docs/pr-standards.md.
+Before opening, run the pre-flight checklist in docs/workflow.md.
 
 Delete every guidance comment (including this one) and any section that
 doesn't apply — whatever is left lands in history.
@@ -13,13 +13,15 @@ doesn't apply — whatever is left lands in history.
 ## Summary
 
 <!-- What this PR does and why, in two or three sentences, and where it comes
-from (the doc, spec section, or decision the issue implements). -->
+from (the SPEC.md section it implements). -->
 
 ## Linked issue
 
 Closes #
 
-<!-- Trivial docs fixes (typos, broken links) may omit this — see docs/docs-only-changes.md. -->
+<!-- A task from an interactive session with no issue: delete this section
+and state the task and its acceptance criteria in the Summary. Trivial docs
+fixes may omit it too — see docs/workflow.md. -->
 
 ## Testing
 
@@ -29,7 +31,7 @@ Closes #
 
 <!-- UI changes only: 1–4 screenshots of what changed (before/after for fixes,
 a phone-width view if the layout differs), committed to dev/screenshots/pr-<N>/
-and linked by commit SHA — see docs/pr-standards.md. -->
+and linked by commit SHA — see docs/workflow.md. -->
 
 ## TL;DR
 

@@ -54,7 +54,7 @@ A diagram or tree beats prose. -->
 
 <!-- TEMPLATE: every surface other code or people depend on — types, APIs,
 file formats, CLI — precise enough to test against. Mark each surface that is
-versioned (docs/commit-standards.md "Versioned surfaces"). -->
+versioned (docs/workflow.md "Versioned surfaces"). -->
 
 ## Behavior
 

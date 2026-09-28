@@ -12,15 +12,18 @@ No modules are published yet.
 
 ## Planned
 
-Stack modules — `node`, `python`, and so on — each supplying the parts of the
-core that are deliberately stack-shaped:
+Stack modules — `node`, `python`, and so on — each fill the slots in the core
+that are deliberately stack-shaped:
 
-- the command table in `AGENTS.md` §5 and the matching `env:` block in
-  `.github/workflows/ci.yml`;
-- the toolchain setup step (and runtime matrix, if any) in `ci.yml`;
-- the runner and layout sections of `docs/testing-standards.md`;
-- the code section of `docs/naming-conventions.md`;
+- `check`, defined in the stack's task runner, and the command table in
+  `AGENTS.md` "Commands";
+- the gate steps in `.github/workflows/ci.yml` — toolchain setup, install,
+  `check` — and a runtime matrix, if any;
+- the package ecosystem in `.github/dependabot.yml`;
+- the install step in `.claude/hooks/session-start.sh`;
+- the "Organization" section of `docs/testing.md` and the "Code" naming
+  section of `docs/documentation.md`;
 - `.gitignore` entries for the toolchain.
 
 A stack module fills these slots; it never changes the contracts in
-`docs/ci-standards.md` or `docs/testing-standards.md`.
+`docs/ci.md` or `docs/testing.md`.

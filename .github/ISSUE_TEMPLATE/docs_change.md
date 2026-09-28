@@ -9,7 +9,7 @@ assignees: ""
 <!--
 Only for changes where every file touched is Markdown. If code, config, or CI
 is involved, use the Feature / task template instead. See
-docs/docs-only-changes.md.
+docs/workflow.md "Docs-only changes".
 
 Trivial, mechanical fixes (typos, broken links, formatting) don't need an issue
 at all — just open the PR.

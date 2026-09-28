@@ -1,0 +1,17 @@
+# Dependabot — keeps the GitHub Actions the workflows use up to date. A stack
+# module adds its own package ecosystem (npm, pip, …) as another entry.
+#
+# PR titles come out as "ci: bump …", which passes the PR title check
+# (docs/ci.md). Grouping keeps it to one PR a week, not one per action.
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]

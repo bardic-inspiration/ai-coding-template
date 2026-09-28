@@ -57,14 +57,14 @@ long accounts of rejected alternatives (the PR).
   alternative, if it was rejected — so nobody undoes it by accident. Size is
   no guide: a one-line rule can rest on a large decision. The options weighed
   and the debate go in the PR description, which becomes the squash commit
-  body ([`pr-standards.md`](pr-standards.md)).
+  body ([`workflow.md`](workflow.md) "The PR is the record").
 - **Say when something isn't built yet.** Everything in the spec is true of
   `main`, except text marked **`Planned (plan NNNN):`**. The PR that makes it
   true removes the marker. During a greenfield build, the header's
   `status: building` covers the whole spec instead.
 - **Cite by ID, not position.** Refer to invariants and sections by ID or
   heading, not by numbers that shift when the spec is reorganized.
-- **One home per fact** ([`documentation-standards.md`](documentation-standards.md)).
+- **One home per fact** ([`documentation.md`](documentation.md)).
   Other docs point at the spec; the spec doesn't copy them.
 - **Split when it's too long to read by section.** Past a few hundred lines,
   move areas into `docs/spec/<area>.md` and keep `SPEC.md` as the index:
@@ -74,9 +74,9 @@ long accounts of rejected alternatives (the PR).
 
 - **Issues cite the spec.** A task names the spec section it implements, and
   its acceptance criteria are derived from that section's statements
-  ([`issue-standards.md`](issue-standards.md)).
+  ([`workflow.md`](workflow.md) "Issues").
 - **Read before you write.** A session reads the cited sections before
-  touching code ([`AGENTS.md`](../AGENTS.md) §4).
+  touching code ([`AGENTS.md`](../AGENTS.md) "Working loop").
 - **Spec and code change together.** A PR that changes behavior updates the
   spec in the same PR, so the two never disagree on `main`.
 - **Ambiguity stops work.** If the spec is silent or looks wrong, don't invent
@@ -89,7 +89,7 @@ long accounts of rejected alternatives (the PR).
   what it does, `git blame` it (or `git log -S '<phrase>' -- SPEC.md`): the
   commit's body gives the reasoning, and its `(#N)` leads to the PR and issue.
   There is no changelog file, amendment table, or spec version. Surfaces
-  that outside code depends on are versioned individually ([`commit-standards.md`](commit-standards.md)
+  that outside code depends on are versioned individually ([`workflow.md`](workflow.md)
   "Versioned surfaces").
 
 ## Plans
@@ -113,7 +113,7 @@ Format and lifecycle: [`plans/README.md`](plans/README.md).
 
 ## Keeping it lean
 
-The doc audit ([`doc-audit.md`](doc-audit.md)) checks that:
+The doc audit ([`documentation.md`](documentation.md) "Doc audit") checks that:
 
 - the spec describes `main` — no stale statements, and no `Planned` marker
   whose plan is finished or gone;

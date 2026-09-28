@@ -4,50 +4,35 @@
 
 # {{PROJECT_NAME}}
 
-<!-- TEMPLATE: one paragraph — what this is, who it's for, and what it
-deliberately is not. -->
+<!-- TEMPLATE: one paragraph — what this is and who it's for. This is the
+public face; SPEC.md holds the detailed purpose and non-goals. -->
 
 {{PROJECT_SUMMARY}}
 
 ## Status
 
 <!-- TEMPLATE: one line on where the project stands, then point at the live
-tracker (issues, milestones, a roadmap doc) rather than restating it here —
-a status restated in two places drifts. -->
+tracker (issues, milestones, active plans) rather than restating it here. -->
 
 ## How this repo is built
 
-This project is developed largely by AI coding agents working in small,
-verifiable steps:
+This project is built largely by AI coding sessions — some interactive, some
+running on a schedule — in small, verifiable steps:
 
-0. [`SPEC.md`](SPEC.md) is the source of truth for what to build; work too big
-   for one PR is sequenced by a plan in [`docs/plans/`](docs/plans/README.md).
-1. Work is sliced into PR-sized GitHub issues with testable acceptance
-   criteria ([`docs/issue-standards.md`](docs/issue-standards.md)).
-2. Agent sessions — memoryless, often scheduled — each take one issue, follow
-   the working loop in [`AGENTS.md`](AGENTS.md) (test first, green gate,
-   atomic commits), and open one PR.
-3. CI and review keep each PR honest: the gate must be green, each PR carries
-   one concern, and every issue and PR ends with a plain-English TL;DR.
-4. Each PR lands as a single squash commit, so `git log` on `main` reads one
-   line per issue, with the full why in each commit body.
+- **The task is the prompt, the PR is the response, review is the evaluation,
+  and the squash commit on `main` is the record.**
+- [`SPEC.md`](SPEC.md) is the source of truth for what to build; work bigger
+  than one PR is sequenced by a plan in [`docs/plans/`](docs/plans/README.md).
+- Every change passes the same gate — one `check` command, run locally and in
+  CI — and a human merges it.
+- So `git log` on `main` reads one line per change, with its why in the body.
 
-Agents and humans starting fresh should read [`AGENTS.md`](AGENTS.md) first —
-it is the canonical guide.
+Agents and humans starting fresh should read [`AGENTS.md`](AGENTS.md) first.
 
 ## Development
 
-<!-- TEMPLATE: optionally a short code block of the most common commands; the
-full list stays in AGENTS.md §5. -->
-
-The commands to install, lint, test, and run are in [`AGENTS.md`](AGENTS.md)
-§5.
-
-## Contributing
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) to get set up.
-[`AGENTS.md`](AGENTS.md) is the canonical guide for how to work, and its §4
-routing table indexes the standards docs under [`docs/`](docs/).
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) to get set up; the commands are in
+[`AGENTS.md`](AGENTS.md) "Commands".
 
 ## License
 

@@ -1,34 +1,28 @@
 # Using This Template
 
-How to turn this template into a new project's working governance: the docs,
-templates, and CI that let memoryless agent sessions and humans build the
-project the same way. Delete this file and [`modules/`](modules/) once adoption
-is done.
+How to turn this template into a new project's working standard: the docs,
+templates, CI, and Claude Code setup that let AI sessions — interactive or
+scheduled — and you build a project the same way. Delete this file and
+[`modules/`](modules/) once adoption is done.
 
 ## What's in the box
 
-### Core — every project
-
 | Path | Purpose |
 |---|---|
-| [`AGENTS.md`](AGENTS.md) | The canonical working guide: hard rules, working loop, routing table to every standards doc, command table. |
-| [`SPEC.md`](SPEC.md) | The spec skeleton — right-size it: keep the parts the project needs ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)). |
-| [`CLAUDE.md`](CLAUDE.md) | Claude Code–specific conventions (one question at a time; never watch PRs). |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, plus the short version of the rules. |
-| [`README.md`](README.md) | Project README skeleton, including "How this repo is built". |
-| [`docs/`](docs/) | Protocol docs — spec-driven development, issues, PRs, commits, testing, CI, scope, docs-only path, documentation standards, naming, doc audit. |
-| [`docs/plans/`](docs/plans/README.md) | Plan format and lifecycle, and plan 0001 — the initial build. |
-| [`.github/`](.github/) | Stack-agnostic CI gate; PR-title check; issue templates (task, bug, docs); PR template. |
-| [`.claude/skills/`](.claude/skills/) | `ask-me` (form intent) and `grill-me` (stress-test a plan). |
+| [`AGENTS.md`](AGENTS.md) | The canonical guide for any agent: the two modes, hard rules, working loop, routing table, commands. |
+| [`SPEC.md`](SPEC.md) | The spec skeleton — right-size it ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)). |
+| [`CLAUDE.md`](CLAUDE.md) | Imports `AGENTS.md` for Claude Code, and adds its specifics: PR watching, configuration, skills. |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, and the short version of the rules. |
+| [`README.md`](README.md) | Project README skeleton. |
+| [`docs/`](docs/) | Five protocol docs — spec-driven development, workflow (everything Git and GitHub), testing, CI, documentation — and `plans/`, with plan 0001, the initial build. |
+| [`.github/`](.github/) | The CI gate, the PR title check, Dependabot for Actions, issue and PR templates. |
+| [`.claude/`](.claude/) | `settings.json` (permissions and the SessionStart hook), the hook script, and the `ask-me` / `grill-me` skills. |
 | [`.gitignore`](.gitignore) | Stack-agnostic baseline. |
 | [`LICENSE`](LICENSE) | MIT, with placeholders. |
 | [`.llm-facts.yml`](.llm-facts.yml) | Optional AI-usage disclosure label source. |
 
-### Modules — opt in
-
-See [`modules/README.md`](modules/README.md). Stack modules (Node, Python, …)
-are planned; until then, the stack-shaped slots are marked `TEMPLATE:` and
-filled by hand.
+Stack modules (Node, Python, …) are planned ([`modules/README.md`](modules/README.md));
+until then, the stack-shaped slots are marked `TEMPLATE:` and filled by hand.
 
 ## Conventions
 
@@ -47,12 +41,11 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
 
 | Placeholder | Where | Value |
 |---|---|---|
-| `{{PROJECT_NAME}}` | README | Human-readable project name. |
-| `{{PROJECT_SUMMARY}}` | README | One paragraph: what, for whom, what it isn't. |
-| `{{PROJECT_PURPOSE}}` | SPEC.md | A paragraph of purpose and audience; non-goals follow it. |
-| `{{REPO_SLUG}}` | CONTRIBUTING, issue config, PR standards | `owner/repo`. |
-| `{{REPO_NAME}}` | CONTRIBUTING | `repo`. |
-| `{{INSTALL_CMD}}` … `{{RUN_CMD}}` | AGENTS.md §5, CONTRIBUTING | The stack's commands — and mirror them in `ci.yml`'s `env:` block. |
+| `{{PROJECT_NAME}}` | README, SPEC.md | Human-readable project name. |
+| `{{PROJECT_SUMMARY}}` | README | One public-facing paragraph: what, and for whom. |
+| `{{PROJECT_PURPOSE}}` | SPEC.md | Purpose and audience; the non-goals follow it. |
+| `{{REPO_SLUG}}`, `{{REPO_NAME}}` | CONTRIBUTING, issue config, workflow.md | `owner/repo`, and `repo`. |
+| `{{INSTALL_CMD}}`, `{{CHECK_CMD}}`, `{{FIX_CMD}}`, `{{TEST_CMD}}`, `{{RUN_CMD}}` | AGENTS.md "Commands", CONTRIBUTING, `.claude/settings.json` | The stack's commands; `CHECK_CMD` is the gate. |
 | `{{YEAR}}`, `{{COPYRIGHT_HOLDER}}` | LICENSE | Copyright line. |
 | `{{START_DATE}}` | .llm-facts.yml | When AI-assisted development began. |
 | `{{INVARIANT_NAME}}`, `{{INVARIANT}}` | SPEC.md | The first invariant's short name and statement. |
@@ -66,30 +59,34 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
    Set `SPEC.md`'s status to `building` when Phase 0 opens.
 3. **Fill placeholders and resolve `TEMPLATE:` comments** — each one either
    becomes content or is deleted.
-4. **Wire the gate.** Fill the command table in `AGENTS.md` §5 and the `env:`
-   block in `.github/workflows/ci.yml` together, and add the toolchain setup
-   step. Once there is code to check, set `GATE_REQUIRED: "true"`
-   ([`docs/ci-standards.md`](docs/ci-standards.md)).
+4. **Wire the gate** (plan 0001, Phase 0): define `check` in the stack's task
+   runner and list the commands in `AGENTS.md` "Commands"; in `ci.yml`,
+   replace the "Gate not wired yet" step with toolchain setup, install, and
+   `check`; fill the install step in `.claude/hooks/session-start.sh`
+   ([`docs/ci.md`](docs/ci.md)).
 5. **Configure GitHub** — the settings below.
 6. **Clean up:** delete this file, `modules/`, and the README banner.
 7. **Audit.** The grep above returns nothing, and every relative link resolves
-   ([`docs/doc-audit.md`](docs/doc-audit.md)).
+   ([`docs/documentation.md`](docs/documentation.md) "Doc audit").
 
 ## GitHub settings
 
-These enforce the rules the docs state; they're repository settings, not files.
+These enforce what the docs state; they're repository settings, not files.
 
-- [ ] **Labels:** `task`, `bug`, `documentation`, `needs-discussion` (plus any
-      a module adds).
-- [ ] **Pull requests:** allow only **squash merging**, with the default
-      commit message set to **"Pull request title and description"** — that
-      is what makes each PR one legible commit on `main`
-      ([`docs/commit-standards.md`](docs/commit-standards.md)). Turn on
+- [ ] **Labels:** `task`, `bug`, `documentation`, `needs-discussion`.
+- [ ] **General → Pull Requests:** allow only **squash merging**, with the
+      default commit message **"Pull request title and description"** — that
+      is what makes each PR one legible commit on `main`. Turn on "Always
+      suggest updating pull request branches," "Allow auto-merge," and
       "Automatically delete head branches."
 - [ ] **Branch ruleset on `main`:** require a pull request with **0 required
       approvals** (GitHub won't let you approve your own PR — for a solo
       maintainer, the merge is the review); require the `gate` and `pr-title`
-      status checks; require linear history; block force pushes and deletion.
+      status checks, with **"Require branches to be up to date before
+      merging"** — when several PRs are open, each merge makes the rest
+      re-test against the new `main` before they can land; require linear
+      history; block force pushes and deletion.
 - [ ] **Actions:** default workflow permissions read-only.
-- [ ] **Issues:** templates are picked up from `.github/ISSUE_TEMPLATE/`;
-      blank issues are disabled by `config.yml`.
+- [ ] **Security:** Dependabot version updates run from
+      `.github/dependabot.yml` with no setting; turn on Dependabot alerts for
+      vulnerability notices.

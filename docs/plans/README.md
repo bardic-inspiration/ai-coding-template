@@ -11,7 +11,7 @@ done — is in [`spec-driven-development.md`](../spec-driven-development.md).
 | [0001 — Initial build](0001-initial-build.md) | {{PLAN_0001_GOAL}} | Phase 0 |
 
 With no active plans, work comes straight from the issue queue
-([`issue-standards.md`](../issue-standards.md)).
+([`workflow.md`](../workflow.md) "The queue").
 
 ## Lifecycle
 
@@ -23,7 +23,7 @@ With no active plans, work comes straight from the issue queue
    in a milestone named `NNNN · Phase N`, whose description links the plan
    rather than restating it. Don't file later phases' issues yet.
 3. **Build.** Sessions work the issues through the normal working loop
-   ([`AGENTS.md`](../../AGENTS.md) §4).
+   ([`AGENTS.md`](../../AGENTS.md) "Working loop").
 4. **QA pass.** When the phase's issues are merged, walk its Exit criteria
    against the assembled `main`, re-run the full gate, and confirm the spec
    describes what shipped. A failed or partial pass isn't a close: file the

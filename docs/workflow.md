@@ -1,0 +1,245 @@
+# Workflow
+
+How a change gets from an idea to `main` — issues, branches, commits, pull
+requests, CI, and merging. Everything Git and GitHub lives here.
+
+Every change takes the same path, whichever mode produced it
+([`AGENTS.md`](../AGENTS.md) "How work happens"): a task, a branch, a PR with
+a green check, a human merge — and one squash commit on `main` as the record.
+
+## Issues
+
+An issue is a prompt that outlives its session: the task, written down where
+the next session — or you, next month — can find it.
+
+- **Routines always work from an issue.** An interactive session files one for
+  work it won't finish itself; a task that comes from chat and lands in this
+  session's PR needs no issue — the PR description carries it.
+- **Sized for one PR.** If it won't fit, split it before starting.
+- **Testable acceptance criteria**, derived from the `SPEC.md` section the
+  issue cites. They're the failing tests to write first
+  ([`testing.md`](testing.md)); if one can't become a test, it isn't specific
+  enough yet.
+- **Out of scope, stated** — the first guard against creep.
+- **Dependencies** as a `Depends on #N` line, so the queue skips the issue
+  until they close.
+- **Ends with a `## TL;DR`:** a few plain-English bullets, no jargon — why it
+  exists, and what changes once it's done.
+
+The [templates](../.github/ISSUE_TEMPLATE/) lay these out — Feature / task,
+Bug report, Docs change. They apply only in GitHub's web form; an agent filing
+through the API writes the same sections itself.
+
+### Labels
+
+| Label | Meaning |
+|---|---|
+| `task` | A feature or change sized for one PR. In the queue. |
+| `bug` | Behavior that contradicts the spec. In the queue. |
+| `documentation` | A substantive docs-only change. |
+| `needs-discussion` | Needs a human decision first. Out of the queue until the label comes off. |
+
+Labels are lowercase, colon-scoped where hierarchical (`area:parser`).
+
+### The queue
+
+A routine that isn't handed an issue takes the **lowest-numbered open issue
+labeled `task` or `bug`** that has no open PR linked to it, isn't labeled
+`needs-discussion`, and has every "Depends on" issue closed. Filing order is
+priority and dependency order — file prerequisites first.
+
+The rule assumes one picker at a time. Routines that run in parallel each
+work their own queue, split by a label such as `area:parser`. Plans don't
+change the queue: a plan's issues are filed only when their phase opens
+([`plans/README.md`](plans/README.md)).
+
+### Closing
+
+Issues close through a merged PR carrying `Closes #N`, which keeps the trail
+from issue to commit intact. One that turns out invalid or superseded is
+closed with a comment saying why, and the matching reason ("not planned",
+"duplicate") — never deleted or left to go stale.
+
+## Scope
+
+Sessions don't remember each other, so nobody cleans up "temporary" scope
+creep later — it just becomes permanent drift. Every PR is one concern:
+
+- **Do what the task asks — nothing more.** A file the acceptance criteria
+  don't touch isn't part of this PR, even if the change is one line and
+  obviously right. No drive-by refactors, no "while I'm in here" fixes.
+- **File, don't fold.** Anything worth doing that's out of scope becomes a new
+  issue saying where it came from ("Surfaced while working #N"), and the PR
+  gets one line pointing at it — not a `TODO`, not a note buried in the PR.
+- **A PR that outgrows its task means the task was under-scoped.** Split the
+  extra ground into issues rather than growing the PR.
+- **Two lists name the tempting-but-out-of-scope work:** the spec's non-goals
+  (what the project never does) and each active plan's "Out of scope" (what
+  this stretch of work leaves for later).
+
+**When something unplanned comes up,** ask one question: does proceeding mean
+guessing at behavior, or risking an invariant? **Yes** → stop, and resolve it
+in the spec first ([`spec-driven-development.md`](spec-driven-development.md)
+"Using it"). **No** → keep going, and file the rest.
+
+## Branches
+
+- Branch from `main` as `type/short-description` (`feat/login-form`,
+  `fix/empty-list-crash`), using the commit types below. If your agent
+  platform assigns the branch name, use it as given.
+- One branch per PR.
+- **Once pushed, a branch's history is shared** — another session may have it
+  checked out. Add commits; never amend, rebase, or force-push. To catch up
+  with `main`, merge it in (or use GitHub's "Update branch"); the squash
+  absorbs the merge commit.
+
+## Commits
+
+`main` gets **one commit per PR**, because PRs land by squash merge: the PR
+title becomes the commit subject (with ` (#N)` appended) and the PR
+description becomes its body. So `git log --oneline` reads as the project's
+changelog, one line per change, and `git show` gives the why without leaving
+the repo.
+
+**Conventional Commits** apply to PR titles (CI checks them) and to branch
+commits:
+
+```
+type(scope): imperative subject
+
+Body: WHY, not what — the diff shows what. Wrapped near 72 characters.
+
+Closes #12
+BREAKING CHANGE: what breaks, if anything
+```
+
+- **Types:** `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`,
+  `build`, `style`.
+- **Scope** (optional): the lowercase name of the package, module, or area.
+- **Breaking changes:** `!` after the type or scope (`feat(api)!: ...`), plus
+  a `BREAKING CHANGE:` footer.
+- **Subject:** imperative, lower-case, no trailing period, ≤ 72 characters —
+  for a PR title, including the ` (#N)`.
+
+On the branch, commit tests with the code they cover, and make each commit
+one logical step: reviewers read them, and a later session may pick the branch
+up mid-flight.
+
+### Versioned surfaces
+
+<!-- TEMPLATE: keep this if the project has a surface other code or people
+depend on — an API, a schema, a file format, a CLI. Name each one and its
+changelog. Delete it otherwise. -->
+
+A change to a versioned surface includes its changelog entry and version bump
+(additive → minor, breaking → major) in the same PR. A surface never changes
+silently.
+
+## Pull requests
+
+### The PR is the record
+
+| PR field | Becomes | So write it as |
+|---|---|---|
+| Title | The commit subject on `main` | A Conventional Commits subject ([Commits](#commits)). |
+| Description | The commit body | What a reader of `git log` needs a year from now: what, why, where it came from, how it was tested, the TL;DR. No leftover template comments. |
+
+If review changes the approach, **update the description before merge**, so
+the record matches what landed.
+
+### Opening one
+
+- **Open it when the work is ready.** A routine's run isn't done until it has
+  produced a PR. (Exception: you're told not to.)
+- **Run the pre-flight checklist** (below) first.
+- **Fill in the [template](../.github/pull_request_template.md)**, then delete
+  the sections that don't apply and every guidance comment.
+- **Link its task:** `Closes #N` for an issue. A chat task with no issue
+  states the task and its acceptance criteria in the Summary instead.
+- **Say where it comes from** — the `SPEC.md` section it implements — so a
+  reader can trace commit → PR → issue → spec.
+- **End with a `## TL;DR`:** plain-English bullets — why, and what changes.
+  It's the reviewer's fast path, and it lands in history as the plain-English
+  line of the project.
+
+### Pre-flight checklist
+
+This lives here rather than in the PR template, so it doesn't repeat in every
+commit on `main`.
+
+**Code changes:**
+
+- [ ] Tests written first, and passing; `check` green
+      ([`AGENTS.md`](../AGENTS.md) "Commands").
+- [ ] `SPEC.md` describes the behavior as merged — updated if behavior
+      changed, and any `Planned` marker this PR fulfils removed.
+- [ ] Other docs updated if behavior changed.
+- [ ] One concern, scoped to its task; the invariants still hold.
+- [ ] Screenshots attached, if the UI changed.
+- [ ] Title and description written for `git log`.
+
+**Docs-only changes:** every changed file is Markdown; the title is
+`docs: ...`; links resolve and cross-references are updated; no process
+narration in doc content ([`documentation.md`](documentation.md)).
+
+### Screenshots (UI changes)
+
+<!-- TEMPLATE: keep this if the project has a user interface; otherwise delete
+it, and the Screenshots section of the PR template. -->
+
+A PR that changes what users see includes 1–4 screenshots under
+`## Screenshots` — before/after for fixes, plus a phone-width view if the
+layout differs. Commit them, so a session with no upload path can attach them:
+save to `dev/screenshots/pr-<N>/name.png` (open the PR first to get `<N>`), and
+link by commit SHA so the link survives the folder being pruned —
+`https://github.com/{{REPO_SLUG}}/blob/<sha>/dev/screenshots/pr-<N>/<file>?raw=true`.
+
+## Watching CI
+
+**A PR you open is yours until it's merged or closed.** Opening it isn't the
+end of the task: with several PRs open at once, each merge moves `main` under
+the others, and a PR that was green an hour ago may not be now.
+
+- **Red check** → read the log, fix the cause on the same branch, push. Never
+  skip, disable, or weaken a test to get green. If the failure isn't this PR's
+  (it's red on `main` too), say so once on the PR instead of fixing it here.
+- **Behind `main`, or conflicting** → merge `main` in, resolve, run `check`,
+  push.
+- **Review comments** → fix and push, or answer why not, on the thread.
+- **Blocked on something only a human can decide** → say so once on the PR,
+  and stop.
+
+In an interactive session, tell the user where things stand; in a routine,
+the PR's own comments are the report. How a session watches is tool-specific
+— for Claude Code, see [`CLAUDE.md`](../CLAUDE.md).
+
+## Merging
+
+<!-- TEMPLATE: confirm who merges. The default keeps a human in the loop on
+every change. -->
+
+- **A human reviews and merges.** Agents open and fix PRs; they don't merge
+  them.
+- Merge when `gate` and `pr-title` are green on the latest commit, the branch
+  is up to date with `main`, and review threads are resolved. After reviewing,
+  **"Enable auto-merge"** lets GitHub merge the moment that's all true.
+- Land with **"Squash and merge,"** and check the pre-filled message reads
+  well as a commit.
+- **Dependency updates** from Dependabot need no issue: read what changed, and
+  merge when green.
+
+## Docs-only changes
+
+A change is **docs-only** when every changed file ends in `.md`. Anything
+else in the diff — code, tests, config, a workflow, a lockfile — makes it a
+code change. When in doubt, it's a code change.
+
+- **Skip:** writing tests first, and running `check`. CI skips the gate on a
+  Markdown-only diff by itself ([`ci.md`](ci.md)).
+- **Issues:** a substantive change (a new doc, a rule change) gets one, using
+  the Docs change template; a trivial fix (a typo, a broken link) doesn't.
+- **A `SPEC.md` change** follows
+  [`spec-driven-development.md`](spec-driven-development.md): anything it
+  describes that `main` doesn't do yet is marked `Planned`.
+- **Still required:** correct content, links that resolve, cross-references
+  updated in the same PR, no process narration in doc content, and the TL;DR.
