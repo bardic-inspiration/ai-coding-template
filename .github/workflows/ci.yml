@@ -1,8 +1,8 @@
 # CI — the merge gate. docs/ci.md says what it must do, and why.
 #
 # The gate is one command, `check` (AGENTS.md "Commands"), that you, agents,
-# and CI all run. Plan 0001's Phase 0 wires it in below: toolchain setup,
-# install, check. A Markdown-only diff skips all three, but the job still runs
+# and CI all run. The initial build's Phase 0 wires it in below (TEMPLATE.md
+# "Adopting"): toolchain setup, install, check. A Markdown-only diff skips all three, but the job still runs
 # and reports green, so `gate` can be a required status check.
 
 name: CI
@@ -72,4 +72,4 @@ jobs:
       #   3. the check command (e.g. `npm run check`)
       - name: Gate not wired yet
         if: steps.changes.outputs.docs_only != 'true'
-        run: echo "::warning::The gate isn't wired yet — plan 0001 Phase 0 adds toolchain setup, install, and check (docs/ci.md)."
+        run: echo "::warning::The gate isn't wired yet — the initial build's Phase 0 adds toolchain setup, install, and check (TEMPLATE.md, Adopting)."

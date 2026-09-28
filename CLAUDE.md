@@ -23,6 +23,14 @@ For a spike in a cloud session, where the branch name is assigned, the
 `spike:` PR title is what marks it ([`docs/workflow.md`](docs/workflow.md)
 "Spikes").
 
+## Plans
+
+A plan's tasks are native sub-issues: file each task issue, then attach it to
+the plan with `sub_issue_write`, and read a plan's progress with
+`issue_read` (`get_sub_issues`)
+([`docs/spec-driven-development.md`](docs/spec-driven-development.md)
+"Plans").
+
 ## Asking questions
 
 - When you need to ask the user a question, ask **one question at a time**,

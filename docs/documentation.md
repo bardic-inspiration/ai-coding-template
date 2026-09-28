@@ -13,9 +13,9 @@ defect.
 
 ## Present tense; history lives in git
 
-- Docs describe the project **as it is now**. Plans describe the active
-  future and are deleted when done; the past lives in git — squash commits,
-  PRs, and issues ([`spec-driven-development.md`](spec-driven-development.md)
+- Docs describe the project **as it is now**. The active future lives in
+  plan issues on GitHub; the past lives in git — squash commits, PRs, and
+  issues ([`spec-driven-development.md`](spec-driven-development.md)
   "Three tenses, three homes").
 - A doc that has done its job is deleted, not moved to an archive folder.
   Superseded text is replaced, not struck through or annotated.
@@ -56,9 +56,8 @@ defect.
 - **Root meta-files** keep the open-source convention of `ALL-CAPS.md`:
   `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `LICENSE`, `AGENTS.md`,
   `CLAUDE.md`, `SPEC.md`.
-- **Everything under `docs/`:** `kebab-case.md`. Plans are
-  `docs/plans/NNNN-kebab-case.md`, and a number is never reused. Spec areas,
-  once the spec is split, are `docs/spec/<area>.md`.
+- **Everything under `docs/`:** `kebab-case.md`. Spec areas, once the spec is
+  split, are `docs/spec/<area>.md`.
 - **Stable IDs** that docs cite, like invariants: a short uppercase prefix
   plus a number (`INV-3`). Never reuse or renumber one; retire it.
 - **Branches, commits, and labels:** [`workflow.md`](workflow.md).
@@ -76,10 +75,10 @@ reads as a convention and not an inconsistency to "fix". -->
 The docs are reconciled periodically, not continuously. An audit checks that:
 
 - **the spec describes `main`** — no stale statements, no `Planned` marker
-  whose plan is finished, no history (version annotations, amendment tables,
+  whose plan issue is closed, no history (version annotations, amendment tables,
   past-tense narration);
-- **only live documents exist** — `docs/plans/` holds only active plans, and
-  resolved open questions are gone from the spec;
+- **only live documents exist** — nothing future-tense or finished lives as
+  a file, and resolved open questions are gone from the spec;
 - **status matches GitHub** — anything the docs report about what's built or
   what's next matches the actual issues, PRs, and milestones;
 - **links resolve**, and cross-references use identical spelling;

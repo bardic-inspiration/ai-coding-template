@@ -42,14 +42,6 @@ not to the workflow.
    same branch are cancelled, and dependencies are cached. If the gate gets
    slow, parallelize inside `check` or split jobs — don't drop checks.
 
-## Wiring the gate
-
-A repo fresh from the template has no code, so `ci.yml` runs only the
-docs-only detection and a warning that the gate isn't wired. Plan 0001's
-Phase 0 replaces the warning with three steps from the stack — toolchain
-setup (pinned, with caching), install from the lockfile, and `check` — and
-its Exit criteria require CI to run them green.
-
 ## PR title check
 
 PRs land by squash merge, so a PR's title becomes a commit subject on `main`

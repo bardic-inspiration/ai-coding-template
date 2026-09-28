@@ -38,7 +38,8 @@ through the API writes the same sections itself.
 | `task` | A feature or change sized for one PR. In the queue. |
 | `bug` | Behavior that contradicts the spec. In the queue. |
 | `documentation` | A substantive docs-only change. |
-| `needs-discussion` | Needs a human decision first. Out of the queue until the label comes off. |
+| `plan` | A plan: phases and done-criteria for work bigger than one PR, with its tasks as sub-issues ([`spec-driven-development.md`](spec-driven-development.md) "Plans"). Not in the queue itself. |
+| `needs-discussion` | Needs a human decision before anyone builds it — usually a design interview (`ask-me`, `grill-me`), with the decisions recorded as a comment and the acceptance criteria rewritten and confirmed. Out of the queue until the label comes off. |
 
 Labels are lowercase, colon-scoped where hierarchical (`area:parser`).
 
@@ -51,8 +52,8 @@ priority and dependency order — file prerequisites first.
 
 The rule assumes one picker at a time. Routines that run in parallel each
 work their own queue, split by a label such as `area:parser`. Plans don't
-change the queue: a plan's issues are filed only when their phase opens
-([`plans/README.md`](plans/README.md)).
+change the queue: a plan's tasks are filed only when their phase opens
+([`spec-driven-development.md`](spec-driven-development.md) "Plans").
 
 ### Closing
 
@@ -75,7 +76,7 @@ creep later — it just becomes permanent drift. Every PR is one concern:
 - **A PR that outgrows its task means the task was under-scoped.** Split the
   extra ground into issues rather than growing the PR.
 - **Two lists name the tempting-but-out-of-scope work:** the spec's non-goals
-  (what the project never does) and each active plan's "Out of scope" (what
+  (what the project never does) and each open plan's "Out of scope" (what
   this stretch of work leaves for later).
 
 **When something unplanned comes up,** ask one question: does proceeding mean

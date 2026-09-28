@@ -18,8 +18,9 @@ before filing. See docs/workflow.md.
 ## Spec reference
 
 <!--
-The SPEC.md section this implements, and the plan and phase it belongs to, if
-any. The acceptance criteria below derive from that section's statements.
+The SPEC.md section this implements, and — if it's part of a plan — the plan
+issue and phase (file it as a sub-issue of the plan). The acceptance criteria
+below derive from that section's statements.
 
 Depends on #   (delete this line if nothing blocks it)
 -->

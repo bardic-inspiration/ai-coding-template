@@ -4,8 +4,9 @@
 
 <!-- TEMPLATE: status is one of
 - draft    — being written; nothing is built from it yet.
-- building — the initial build plan is active; the spec isn't yet true of main.
-- current  — true of main, except sections marked `Planned (plan NNNN):`.
+- building — the initial build plan is open; the spec isn't yet true of main.
+- current  — true of main, except sections marked `Planned (#N):`, where #N
+             is the plan issue building them.
 
 Right-size this spec: keep the parts the project needs and delete the rest. A
 small tool's spec can fit on a page. How to write and use it:

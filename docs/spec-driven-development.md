@@ -16,13 +16,13 @@ Keep them apart:
 
 | Kind | Tense | Lives in | Lifespan | A session reads it |
 |---|---|---|---|---|
-| **Spec** | Present — what the system is and must do | `SPEC.md` | The life of the project, edited in place | Always: the sections its issue cites |
-| **Plan** | Future — how to get from here to there | [`docs/plans/`](plans/README.md) | Until its exit criteria hold — then deleted | Only while it's active |
-| **History** | Past — what changed, and why | git: squash commits, PRs, issues | Forever | On demand, never by default |
+| **Spec** | Present — what the system is and must do | `SPEC.md` | The life of the project, edited in place | Always: the sections its task cites |
+| **Plan** | Future — how to get from here to there | A GitHub issue labeled `plan`, its tasks as sub-issues | Until its exit criteria hold — then closed | While it's open |
+| **History** | Past — what changed, and why | Squash commits, closed PRs and issues | Forever | On demand, never by default |
 
-**The working tree holds the present and the active future; git holds the
-past.** A document that has done its job is deleted, not archived — an archive
-in the tree is noise in every search a session runs.
+**The repo holds only the present; GitHub holds the active future; git holds
+the past.** Nothing future-tense or finished is ever a file in the tree — an
+archive in the tree is noise in every search a session runs.
 
 ## What a spec contains
 
@@ -59,8 +59,8 @@ long accounts of rejected alternatives (the PR).
   and the debate go in the PR description, which becomes the squash commit
   body ([`workflow.md`](workflow.md) "The PR is the record").
 - **Say when something isn't built yet.** Everything in the spec is true of
-  `main`, except text marked **`Planned (plan NNNN):`**. The PR that makes it
-  true removes the marker. During a greenfield build, the header's
+  `main`, except text marked **`Planned (#N):`**, where `#N` is the plan
+  issue building it. The PR that makes it true removes the marker. During a greenfield build, the header's
   `status: building` covers the whole spec instead.
 - **Cite by ID, not position.** Refer to invariants and sections by ID or
   heading, not by numbers that shift when the spec is reorganized.
@@ -95,31 +95,40 @@ long accounts of rejected alternatives (the PR).
 ## Plans
 
 A **plan** turns a spec change too big for one PR into ordered work. The first
-build is a plan; so is any large feature afterwards.
+build is a plan; so is any large feature afterwards. A plan is a GitHub issue
+labeled `plan` ([template](../.github/ISSUE_TEMPLATE/plan.md)) — never a file.
 
-- The plan's PR writes the new or changed behavior into the spec, marked
-  `Planned`. The plan itself holds only the *how*: phases, each with
-  Entry / Build / Exit criteria.
-- A phase's issues are filed when the phase opens, not before, so the queue
-  only ever holds work that's ready.
-- A phase closes on a **QA pass**: walk its Exit criteria against the
-  assembled `main`, re-run the full gate, and confirm the spec describes what
-  shipped. The checked-off criteria go in the description of the PR that
-  closes the phase, so the record lands in git.
-- **The PR that closes the last phase deletes the plan.** By then the spec
-  describes the result, and git holds the plan.
+1. **Propose.** Open the plan issue: goal, phases with Entry / Build / Exit
+   criteria, out of scope. In a PR, write the behavior it will build into the
+   spec, marked `Planned (#N):`.
+2. **Open a phase.** File the phase's tasks as sub-issues of the plan — each
+   citing the spec section it implements, with `Depends on #N` where order
+   matters. Later phases wait until theirs opens, so the queue only ever holds
+   work that's ready.
+3. **Build.** Sessions work the tasks through the working loop
+   ([`AGENTS.md`](../AGENTS.md) "Working loop").
+4. **QA pass.** When a phase's tasks are merged, walk its Exit criteria against
+   the assembled `main`, run `check`, and confirm the spec describes what
+   shipped. Tick the criteria in the plan, and comment the result on it. A
+   failed or partial pass isn't a close: file the gaps as sub-issues of the
+   same phase.
+5. **Finish.** When the last phase passes, confirm no `Planned (#N)` marker is
+   left in the spec, and close the plan.
 
-Format and lifecycle: [`plans/README.md`](plans/README.md).
+A plan holds only the *how* — order, slicing, and done-criteria. Design
+deliberation happens in the tasks' issues and PRs, and its outcome goes into
+the spec.
 
 ## Keeping it lean
 
 The doc audit ([`documentation.md`](documentation.md) "Doc audit") checks that:
 
 - the spec describes `main` — no stale statements, and no `Planned` marker
-  whose plan is finished or gone;
+  whose plan issue is closed;
 - the spec carries no history — no version annotations, amendment tables, or
   past-tense narration;
-- `docs/plans/` holds only active plans, and resolved open questions are gone.
+- resolved open questions are gone, and nothing future-tense or finished
+  lives as a file in the tree.
 
 Periodically, a **conformance audit** checks `main` against the whole spec,
 including the seams no single issue owned. Its findings are ordinary `bug` and
@@ -134,8 +143,8 @@ resolved design records, reset it in one docs-only PR:
    so the old doc set stays one command away: `git show <tag>:SPEC.md`.
 2. **Rewrite `SPEC.md` in the present tense.** Fold each amendment and
    resolved decision into the text it changed, and strip the markers.
-3. **Move anything still unbuilt into a plan**, marked `Planned` in the spec.
-   Delete finished plans, surveys, decision records, and changelogs.
+3. **Move anything still unbuilt into a plan issue**, marked `Planned` in the
+   spec. Delete finished plans, surveys, decision records, and changelogs.
 4. **Use the PR description as the map:** what was deleted, where each
    surviving idea now lives, and the tag name. It becomes the commit on
    `main`.

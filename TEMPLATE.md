@@ -14,8 +14,8 @@ scheduled — and you build a project the same way. Delete this file and
 | [`CLAUDE.md`](CLAUDE.md) | Imports `AGENTS.md` for Claude Code, and adds its specifics: PR watching, configuration, skills. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, and the short version of the rules. |
 | [`README.md`](README.md) | Project README skeleton. |
-| [`docs/`](docs/) | Five protocol docs — spec-driven development, workflow (everything Git and GitHub), testing, CI, documentation — and `plans/`, with plan 0001, the initial build. |
-| [`.github/`](.github/) | The CI gate, the PR title check (which also blocks spikes from merging), Dependabot for Actions, issue and PR templates. |
+| [`docs/`](docs/) | Five protocol docs: spec-driven development (including plans), workflow (everything Git and GitHub), testing, CI, and documentation. |
+| [`.github/`](.github/) | The CI gate; the PR title check, which also blocks spikes from merging; Dependabot for Actions; issue templates (task, bug, docs, plan); the PR template. |
 | [`.claude/`](.claude/) | `settings.json` (permissions and the SessionStart hook), the hook script, and the `ask-me` / `grill-me` skills. |
 | [`.gitignore`](.gitignore) | Stack-agnostic baseline. |
 | [`LICENSE`](LICENSE) | MIT, with placeholders. |
@@ -49,31 +49,53 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
 | `{{YEAR}}`, `{{COPYRIGHT_HOLDER}}` | LICENSE | Copyright line. |
 | `{{START_DATE}}` | .llm-facts.yml | When AI-assisted development began. |
 | `{{INVARIANT_NAME}}`, `{{INVARIANT}}` | SPEC.md | The first invariant's short name and statement. |
-| `{{PLAN_0001_GOAL}}`, `{{FIRST_RELEASE}}`, `{{PHASE_1_NAME}}` | docs/plans/ | The initial build's goal, its target release, and its first real phase. |
 
 ## Adopting
 
-1. **Create the repo** from this template.
-2. **Write the spec, right-sized**, and shape plan 0001's phases
+1. **Create the repo** from this template, and **configure GitHub** — the
+   settings below, labels included.
+2. **Fill placeholders and resolve `TEMPLATE:` comments** — each one either
+   becomes content or is deleted. The stack-shaped ones (commands, the CI
+   gate, the hook) are Phase 0's work, below.
+3. **Write the spec, right-sized**
    ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)).
-   Set `SPEC.md`'s status to `building` when Phase 0 opens.
-3. **Fill placeholders and resolve `TEMPLATE:` comments** — each one either
-   becomes content or is deleted.
-4. **Wire the gate** (plan 0001, Phase 0): define `check` in the stack's task
-   runner and list the commands in `AGENTS.md` "Commands"; in `ci.yml`,
-   replace the "Gate not wired yet" step with toolchain setup, install, and
-   `check`; fill the install step in `.claude/hooks/session-start.sh`
-   ([`docs/ci.md`](docs/ci.md)).
-5. **Configure GitHub** — the settings below.
-6. **Clean up:** delete this file, `modules/`, and the README banner.
-7. **Audit.** The grep above returns nothing, and every relative link resolves
+4. **Open the initial-build plan** from the Plan issue template. Add phases up
+   to your first release; Phase 0 is the same for every project — paste it in:
+
+   ```markdown
+   ### Phase 0 — Repository scaffold
+
+   **Entry:** The template is adopted; no project code exists.
+
+   **Build:**
+
+   - The toolchain, and the repo layout in AGENTS.md "Repo layout".
+   - `check`, defined in the stack's task runner, and the commands in
+     AGENTS.md "Commands".
+   - The gate in `.github/workflows/ci.yml` — toolchain setup (pinned, with
+     caching), install from the lockfile, `check` — replacing the "Gate not
+     wired yet" step (docs/ci.md).
+   - The install step in `.claude/hooks/session-start.sh`, and the stack's
+     package ecosystem in `.github/dependabot.yml`.
+
+   **Exit:**
+
+   - [ ] `check` runs green locally on an empty or trivial test suite.
+   - [ ] CI runs `check` and is green, with no "gate not wired" warning.
+   - [ ] A fresh cloud session can run `check` with no manual setup.
+   - [ ] The repo layout matches AGENTS.md "Repo layout".
+   ```
+
+   Then set `SPEC.md`'s status to `building`.
+5. **Clean up:** delete this file, `modules/`, and the README banner.
+6. **Audit.** The grep above returns nothing, and every relative link resolves
    ([`docs/documentation.md`](docs/documentation.md) "Doc audit").
 
 ## GitHub settings
 
 These enforce what the docs state; they're repository settings, not files.
 
-- [ ] **Labels:** `task`, `bug`, `documentation`, `needs-discussion`.
+- [ ] **Labels:** `task`, `bug`, `documentation`, `plan`, `needs-discussion`.
 - [ ] **General → Pull Requests:** allow only **squash merging**, with the
       default commit message **"Pull request title and description"** — that
       is what makes each PR one legible commit on `main`. Turn on "Always

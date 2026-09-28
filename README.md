@@ -12,7 +12,7 @@ public face; SPEC.md holds the detailed purpose and non-goals. -->
 ## Status
 
 <!-- TEMPLATE: one line on where the project stands, then point at the live
-tracker (issues, milestones, active plans) rather than restating it here. -->
+tracker (open plan issues, the issue queue) rather than restating it here. -->
 
 ## How this repo is built
 
@@ -22,7 +22,8 @@ running on a schedule — in small, verifiable steps:
 - **The task is the prompt, the PR is the response, review is the evaluation,
   and the squash commit on `main` is the record.**
 - [`SPEC.md`](SPEC.md) is the source of truth for what to build; work bigger
-  than one PR is sequenced by a plan in [`docs/plans/`](docs/plans/README.md).
+  than one PR is sequenced by a plan — a GitHub issue, with its tasks as
+  sub-issues.
 - Every change passes the same gate — one `check` command, run locally and in
   CI — and a human merges it.
 - So `git log` on `main` reads one line per change, with its why in the body.

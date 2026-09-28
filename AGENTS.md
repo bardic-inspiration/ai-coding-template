@@ -14,7 +14,9 @@ one session's work legible to the next.
 
 What the project is, and what it deliberately isn't, lives in one place:
 [`SPEC.md`](SPEC.md) "Purpose & non-goals". Work bigger than one PR is
-sequenced by the active plans in [`docs/plans/`](docs/plans/README.md).
+sequenced by open plan issues — issues labeled `plan`, with their tasks as
+sub-issues ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)
+"Plans").
 
 ## How work happens
 
@@ -67,7 +69,6 @@ Mark anything that doesn't exist yet as "(planned)". -->
 ├── CLAUDE.md          # Claude Code: imports this file, adds tool specifics
 ├── CONTRIBUTING.md    # setup for humans
 ├── docs/              # protocol docs (routing table below)
-│   └── plans/         # active plans only — deleted when done
 ├── .claude/           # Claude Code settings, hooks, skills
 └── .github/           # CI, Dependabot, issue & PR templates
 ```
@@ -99,8 +100,7 @@ This loop doesn't apply at all ([`docs/workflow.md`](docs/workflow.md)
 
 | Read | When |
 |---|---|
-| [`docs/spec-driven-development.md`](docs/spec-driven-development.md) | Reading, writing, or changing `SPEC.md`; the spec is silent or wrong; a change is too big for one PR. |
-| [`docs/plans/README.md`](docs/plans/README.md) | Proposing a plan, opening or closing a phase, or finishing a plan. |
+| [`docs/spec-driven-development.md`](docs/spec-driven-development.md) | Reading, writing, or changing `SPEC.md`; the spec is silent or wrong; a change is too big for one PR, so it needs a plan. |
 | [`docs/workflow.md`](docs/workflow.md) | Anything Git or GitHub: taking or filing an issue, scope, branching, committing, opening or watching a PR, merging, docs-only changes, spikes. |
 | [`docs/testing.md`](docs/testing.md) | Writing tests. |
 | [`docs/ci.md`](docs/ci.md) | Changing CI or `check`; CI fails in a way you don't understand. |
