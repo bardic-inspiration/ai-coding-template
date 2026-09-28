@@ -1,8 +1,10 @@
 # CI Standards
 
 What CI must accomplish for this repo, whatever the language or toolchain.
-[`ci.yml`](../.github/workflows/ci.yml) implements this contract; a stack
-module supplies the commands and toolchain setup, never a different contract.
+[`ci.yml`](../.github/workflows/ci.yml) implements the gate and
+[`pr-title.yml`](../.github/workflows/pr-title.yml) guards the commit record; a
+stack module supplies the commands and toolchain setup, never a different
+contract.
 
 ## Why CI exists here
 
@@ -19,8 +21,8 @@ contributor runs but CI doesn't — erodes that.
    command table in [`AGENTS.md`](../AGENTS.md) §5; `ci.yml`'s `env:` block
    mirrors it. CI has no private checks, and every gate command runs in CI.
    A change to one side is a change to both, in the same PR.
-3. **Be the merge gate.** The job is a required status check under branch
-   protection, and red is never merged. Tests are never skipped, disabled, or
+3. **Be the merge gate.** `gate` and `pr-title` are both required status
+   checks under branch protection, and red is never merged. Tests are never skipped, disabled, or
    marked `continue-on-error` to get green.
 4. **Never pass vacuously.** A stage that isn't wired up announces itself with
    a notice. Once the project has code, `GATE_REQUIRED` is `"true"`, and an
@@ -61,6 +63,22 @@ contributor runs but CI doesn't — erodes that.
 | Test (`TEST_CMD`) | The full suite. | **Yes.** |
 | Build (`BUILD_CMD`) | The shippable artifact builds. | If the project ships a built artifact. |
 | Docs checks (`DOCS_CHECK_CMD`) | Checks that stay meaningful on a docs-only change: links resolve, a doc matches the code it describes. | Optional. |
+
+## PR title check
+
+PRs land by squash merge, so a PR's title becomes the subject of its commit on
+`main` ([`commit-standards.md`](commit-standards.md) "How history is shaped").
+[`pr-title.yml`](../.github/workflows/pr-title.yml) fails a PR whose title
+isn't a Conventional Commits subject, ends with a period, or would make a
+subject longer than 72 characters once GitHub appends ` (#N)`. GitHub's own
+`Revert "…"` titles pass as they are.
+
+- It checks PR metadata, not code, so it runs on docs-only PRs too, and re-runs
+  when the title is edited.
+- The title reaches the script only through `env` — never interpolated into
+  it — because anyone opening a PR controls it.
+- Its type list mirrors [`commit-standards.md`](commit-standards.md); change
+  both together.
 
 ## Enforcing project rules
 
@@ -109,4 +127,4 @@ module defines the matrix.
 
 Candidates for later modules, deliberately left out of the baseline: release
 and deploy workflows, dependency-update automation, security and secret
-scanning, coverage thresholds, and PR-title linting.
+scanning, and coverage thresholds.

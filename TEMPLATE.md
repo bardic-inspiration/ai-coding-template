@@ -16,7 +16,7 @@ is done.
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, plus the short version of the rules. |
 | [`README.md`](README.md) | Project README skeleton, including "How this repo is built". |
 | [`docs/`](docs/) | Protocol docs — issues, PRs, commits, testing, CI, scope, docs-only path, documentation standards, naming, doc audit. |
-| [`.github/`](.github/) | Stack-agnostic CI workflow; issue templates (task, bug, docs); PR template. |
+| [`.github/`](.github/) | Stack-agnostic CI gate; PR-title check; issue templates (task, bug, docs); PR template. |
 | [`.claude/skills/`](.claude/skills/) | `ask-me` (form intent) and `grill-me` (stress-test a plan). |
 | [`.gitignore`](.gitignore) | Stack-agnostic baseline. |
 | [`LICENSE`](LICENSE) | MIT, with placeholders. |
@@ -78,10 +78,14 @@ These enforce the rules the docs state; they're repository settings, not files.
 
 - [ ] **Labels:** `task`, `bug`, `documentation`, `needs-discussion` (plus any
       a module adds).
-- [ ] **Pull requests:** allow only **Rebase merging**; turn on
+- [ ] **Pull requests:** allow only **squash merging**, with the default
+      commit message set to **"Pull request title and description"** — that
+      is what makes each PR one legible commit on `main`
+      ([`docs/commit-standards.md`](docs/commit-standards.md)). Turn on
       "Automatically delete head branches."
 - [ ] **Branch ruleset on `main`:** require a pull request; require the `gate`
-      status check; require linear history; block force pushes and deletion.
+      and `pr-title` status checks; require linear history; block force pushes
+      and deletion.
 - [ ] **Actions:** default workflow permissions read-only.
 - [ ] **Issues:** templates are picked up from `.github/ISSUE_TEMPLATE/`;
       blank issues are disabled by `config.yml`.

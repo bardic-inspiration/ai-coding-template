@@ -37,9 +37,10 @@ a design doc), add it as a second bullet: "`SPEC.md` is authoritative for
 - Docs describe the **project** — its technical and design intent — not how a
   change came to be. They must not reference chat sessions, "as discussed",
   session links, or similar process narration.
-- That record belongs in the **PR description** and commit bodies instead
-  ([`pr-standards.md`](pr-standards.md),
-  [`commit-standards.md`](commit-standards.md)).
+- That record belongs in the **PR description** instead — which becomes the
+  body of the PR's squash commit on `main`, so it stays in history without
+  cluttering the docs ([`pr-standards.md`](pr-standards.md) "The PR is the
+  record").
 - If a decision needs to outlive the PR, capture the decision and its
   rationale in the docs, written as settled intent — not as a summary of the
   conversation that produced it.
@@ -50,9 +51,10 @@ a design doc), add it as a second bullet: "`SPEC.md` is authoritative for
 ## Keep in sync
 
 - If a change alters observable behavior, update the affected docs **in the
-  same PR** — the README and any doc describing the changed surface. The PR
-  checklist item "Docs updated if behavior changed" is not optional when
-  behavior changed.
+  same PR** — the README and any doc describing the changed surface. The
+  pre-flight item "Docs updated if behavior changed"
+  ([`pr-standards.md`](pr-standards.md)) is not optional when behavior
+  changed.
 - When a shared term, identifier, or section number changes, every doc that
   names it changes in the same PR, with identical spelling
   ([`naming-conventions.md`](naming-conventions.md)).

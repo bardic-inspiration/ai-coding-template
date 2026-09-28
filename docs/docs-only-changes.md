@@ -27,7 +27,7 @@ protocol. When in doubt, treat it as a code change.
 ## PR & commit
 
 - **Skip:** writing tests first, running the gate locally, and the code
-  checklist in the PR template.
+  half of the pre-flight checklist.
 - **Still required:**
   - commit type `docs` ([`commit-standards.md`](commit-standards.md)), atomic
     commits;
@@ -39,8 +39,8 @@ protocol. When in doubt, treat it as a code change.
     ([`documentation-standards.md`](documentation-standards.md) "Product docs,
     not process");
   - the `## TL;DR` on both the issue (if any) and the PR;
-  - the docs-only checklist in the
-    [PR template](../.github/pull_request_template.md).
+  - the docs-only half of the pre-flight checklist
+    ([`pr-standards.md`](pr-standards.md) "Pre-flight checklist").
 
 ## CI
 

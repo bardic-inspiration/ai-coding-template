@@ -1,17 +1,19 @@
 <!--
-One PR = one issue = one concern. See AGENTS.md and docs/pr-standards.md.
+This description becomes the body of the squash commit on main, and the title
+becomes its subject — write both for someone reading `git log` a year from now.
+Title: `type(scope): imperative subject`, ≤ 72 characters including the " (#N)"
+GitHub appends. See docs/pr-standards.md "The PR is the record".
 
-Docs-only PR (every changed file is Markdown)? Use the docs-only checklist and
-delete the code one — see docs/docs-only-changes.md. Mixing a doc edit with any
-code change makes it a code change; use the code checklist.
+Before opening, run the pre-flight checklist in docs/pr-standards.md.
 
-Delete any section that doesn't apply rather than leaving it empty.
+Delete every guidance comment (including this one) and any section that
+doesn't apply — whatever is left lands in history.
 -->
 
 ## Summary
 
-<!-- One or two sentences: what this PR does, and where it comes from (the doc,
-spec section, or decision the issue implements). -->
+<!-- What this PR does and why, in two or three sentences, and where it comes
+from (the doc, spec section, or decision the issue implements). -->
 
 ## Linked issue
 
@@ -21,40 +23,19 @@ Closes #
 
 ## Testing
 
-<!-- Tests added or changed, and anything checked by hand. N/A for docs-only PRs. -->
+<!-- Tests added or changed, and anything checked by hand. Delete for docs-only PRs. -->
 
 ## Screenshots
 
-<!--
-UI changes only: 1–4 screenshots of what changed (before/after for fixes, a
-phone-width view if the layout differs), committed to dev/screenshots/pr-<N>/
-and linked by commit SHA — see docs/pr-standards.md. Delete this section if
-nothing users see changed.
--->
-
-## Checklist — code changes
-
-- [ ] Tests written first, and passing
-- [ ] Gate green locally (AGENTS.md §5)
-- [ ] Atomic commits in Conventional Commits format
-- [ ] Docs updated if behavior changed
-- [ ] Scoped to the linked issue only; hard rules (AGENTS.md §2) still hold
-- [ ] 1–4 screenshots attached, if the UI changed
-
-## Checklist — docs-only changes
-
-- [ ] Every changed file is Markdown
-- [ ] Commits use `docs: ...`
-- [ ] Links resolve; cross-references updated where a shared term or section changed
-- [ ] No process narration in doc content (docs/documentation-standards.md)
+<!-- UI changes only: 1–4 screenshots of what changed (before/after for fixes,
+a phone-width view if the layout differs), committed to dev/screenshots/pr-<N>/
+and linked by commit SHA — see docs/pr-standards.md. -->
 
 ## TL;DR
 
-<!--
-Required. Plain English, no jargon, bullet points — explain it like you're
-telling a friend who doesn't code:
+<!-- Required. Plain English, no jargon, bullet points — explain it like
+you're telling a friend who doesn't code:
 - Why: what problem or reason this PR exists for.
-- Impact: what changes for someone using or building the project.
--->
+- Impact: what changes for someone using or building the project. -->
 
 -

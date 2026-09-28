@@ -26,10 +26,11 @@ The full command list — lint, typecheck, build, run — is in
   `type/short-description` ([`docs/pr-standards.md`](docs/pr-standards.md)).
 - **Test first.** Failing test, then the code that passes it
   ([`docs/testing-standards.md`](docs/testing-standards.md)).
-- **Atomic Conventional Commits**, tests committed with the code they cover
+- **Conventional Commits**, tests committed with the code they cover
   ([`docs/commit-standards.md`](docs/commit-standards.md)).
-- **Linear history.** Rebase onto `main`, don't merge it in; PRs land via
-  "Rebase and merge."
+- **One PR, one commit on `main`.** PRs land by squash merge: the PR title
+  becomes the commit subject and the description its body, so write both for
+  `git log`. Merge `main` into your branch to catch up; never force-push.
 - **Green gate, then PR.** Run the gate locally; CI must be green before merge
   ([`docs/ci-standards.md`](docs/ci-standards.md)).
 - **Markdown-only changes** take a lighter path

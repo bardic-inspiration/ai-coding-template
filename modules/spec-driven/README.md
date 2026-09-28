@@ -70,9 +70,11 @@ alone.
 - [ ] **`.github/ISSUE_TEMPLATE/bug_report.md`** — "Expected" cites the
       `SPEC.md` section; "Notes" names the invariant (`INV-n`) touched, if any.
 - [ ] **`.github/pull_request_template.md`** — add a `## Spec section` after
-      "Linked issue"; code checklist gains "Compliant with the invariants
-      (`INV-1`..`INV-n`) and this phase only"; docs-only checklist gains "If
-      `SPEC.md` changed: versioned per `docs/spec-guidelines.md`."
+      "Linked issue" (which `SPEC.md` section this implements or affects).
+- [ ] **`docs/pr-standards.md` "Pre-flight checklist"** — the code list gains
+      "Compliant with the invariants (`INV-1`..`INV-n`) and this phase only";
+      the docs-only list gains "If `SPEC.md` changed: versioned per
+      `docs/spec-guidelines.md`."
 - [ ] **`docs/documentation-standards.md` "Source of truth"** — add the
       `SPEC.md` bullet.
 - [ ] **`docs/docs-only-changes.md`** — a `SPEC.md` change still follows

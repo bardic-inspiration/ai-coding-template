@@ -73,7 +73,8 @@ issue calls for. -->
    "Picking up an issue"). Scope your work to that issue only.
 2. **Read before you write.** Read the issue and every doc or source it
    references before touching code. The acceptance criteria are your
-   pre-written failing tests.
+   pre-written failing tests. `git log` on the files you'll touch is context
+   too: each commit on `main` is one whole PR, with its why in the body.
 3. **Test first.** Write a failing test (red), the minimal code to pass
    (green), then refactor — per behavior, not per module
    ([`docs/testing-standards.md`](docs/testing-standards.md)).
@@ -99,8 +100,8 @@ fires — you don't need all of them for every issue.
 |---|---|
 | [`docs/issue-standards.md`](docs/issue-standards.md) | Picking up, filing, scoping, or closing an issue; something out of scope surfaces mid-work. |
 | [`docs/testing-standards.md`](docs/testing-standards.md) | Writing the failing test (step 3). |
-| [`docs/commit-standards.md`](docs/commit-standards.md) | Writing a commit message (step 5). |
-| [`docs/pr-standards.md`](docs/pr-standards.md) | Branching, opening a PR, adding screenshots, or answering review (step 6). |
+| [`docs/commit-standards.md`](docs/commit-standards.md) | Writing a commit message (step 5); how history on `main` is shaped. |
+| [`docs/pr-standards.md`](docs/pr-standards.md) | Branching, the pre-flight checklist, writing the PR title and description (they become the commit on `main`), screenshots, review (step 6). |
 | [`docs/ci-standards.md`](docs/ci-standards.md) | Changing the CI workflow or the gate commands; CI fails in a way you don't understand. |
 | [`docs/scope-discipline.md`](docs/scope-discipline.md) | Tempted to fold in adjacent work — why each PR stays tight to its issue. |
 | [`docs/docs-only-changes.md`](docs/docs-only-changes.md) | Your change touches only Markdown — no code (skips steps 3–4). |

@@ -27,6 +27,8 @@ verifiable steps:
    atomic commits), and open one PR.
 3. CI and review keep each PR honest: the gate must be green, each PR carries
    one concern, and every issue and PR ends with a plain-English TL;DR.
+4. Each PR lands as a single squash commit, so `git log` on `main` reads one
+   line per issue, with the full why in each commit body.
 
 Agents and humans starting fresh should read [`AGENTS.md`](AGENTS.md) first —
 it is the canonical guide.

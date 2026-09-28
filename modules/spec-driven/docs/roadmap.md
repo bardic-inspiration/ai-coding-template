@@ -51,9 +51,10 @@ wraps lives in [`AGENTS.md`](../AGENTS.md) §4.
    - Re-run the full gate across the whole repo, including every invariant
      test that applies.
    - Confirm the docs and any surface changelogs match what actually shipped.
-   - **Record the result** — the Exit checklist, checked off — in the PR that
-     closes the phase's last issue. A failed or partial pass is not a close:
-     file the gaps as issues in the same phase and finish them first.
+   - **Record the result** — the Exit checklist, checked off — in the
+     description of the PR that closes the phase's last issue, so it lands in
+     that PR's squash commit on `main`. A failed or partial pass is not a
+     close: file the gaps as issues in the same phase and finish them first.
 5. **Close and open the next.** A phase and its milestone close only when every
    issue is resolved **and** the QA/QC pass has confirmed every Exit
    criterion. Then return to step 1 for the next phase.
