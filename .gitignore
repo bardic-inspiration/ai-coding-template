@@ -1,0 +1,21 @@
+# Stack-agnostic baseline. A stack module appends its own entries
+# (dependency directories, caches, build output specific to the toolchain).
+
+# Build / test output
+dist/
+build/
+coverage/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

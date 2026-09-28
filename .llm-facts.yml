@@ -1,0 +1,43 @@
+# .llm-facts.yml — LLM Facts label source (optional AI-usage disclosure).
+#
+# TEMPLATE: optional. Fill in as the project accrues history, then render the
+# label (see README.md "LLM Facts"). Delete this file if the project doesn't
+# publish a label.
+#
+# Formatting only: this file describes a label; llm-facts does not verify it.
+# Leave label.verified false unless the figures are independently verified.
+
+schema_version: 1
+
+serving:
+  scope: repository
+  period_start: "{{START_DATE}}"
+  period_end: ongoing
+
+summary:
+  total_sessions: 0
+  total_tokens: 0
+  ai_touched_files_pct: 0
+  ai_touched_lines_pct: 0
+
+models: []
+#  - name: <model name>
+#    tokens: 0
+#    sessions: 0
+#    tool: <agent tool>
+
+tools: []
+#  - name: <agent tool>
+#    verified: false
+
+use: []
+#  - category: boilerplate | design | tests | docs | refactor
+#    note: <one line on what the AI did in this category>
+
+human:
+  reviewed_by_human: true
+  note: Every PR reviewed and merged by the maintainer; CI gates each PR.
+
+label:
+  verified: false
+  generated_by: llm-facts

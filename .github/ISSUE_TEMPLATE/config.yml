@@ -1,0 +1,9 @@
+# TEMPLATE: replace {{REPO_SLUG}} with owner/repo.
+blank_issues_enabled: false
+contact_links:
+  - name: Working guide (AGENTS.md)
+    url: https://github.com/{{REPO_SLUG}}/blob/main/AGENTS.md
+    about: How work is scoped, committed, and reviewed in this repo. Read it before filing.
+  - name: Issue standards
+    url: https://github.com/{{REPO_SLUG}}/blob/main/docs/issue-standards.md
+    about: How to scope, label, and link an issue before filing it.
