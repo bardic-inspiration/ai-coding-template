@@ -1,9 +1,10 @@
 # PR title — the title becomes the subject of the squash commit on main, so
 # it must be a Conventional Commits subject (docs/workflow.md "Commits",
-# docs/ci.md "PR title check").
+# docs/ci.md "PR title check"). The same check blocks spikes, which never
+# merge (docs/workflow.md "Spikes").
 #
-# The title is untrusted input: it reaches the script only through env, and
-# is never echoed at the start of a log line.
+# The title and branch name are untrusted input: they reach the scripts only
+# through env, and are never echoed at the start of a log line.
 
 name: PR title
 
@@ -24,6 +25,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
+      # A spike is marked by its branch (spike/…) or, where the agent platform
+      # assigns the branch name, by its title (spike: …). Either one fails
+      # this required check, so a spike can't be merged by accident.
+      - name: Block spikes
+        shell: bash
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          title="${TITLE,,}"
+          spike_title='^spike[:(]'
+          if [[ "$HEAD_REF" == spike/* || "$title" =~ $spike_title ]]; then
+            echo "::error title=Spike::Spikes never merge. Record the findings, file the follow-ups, then close this PR (docs/workflow.md \"Spikes\")."
+            exit 1
+          fi
+          echo "Not a spike."
+
       - name: Check the title is a Conventional Commits subject
         shell: bash
         env:

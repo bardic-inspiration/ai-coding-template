@@ -59,6 +59,12 @@ subject over 72 characters once GitHub appends ` (#N)`. GitHub's own
 `Revert "…"` titles pass as they are. It re-runs when the title is edited, and
 its type list mirrors `workflow.md` — change both together.
 
+The same check **blocks spikes**: it fails any PR whose branch starts with
+`spike/` or whose title starts with `spike:` ([`workflow.md`](workflow.md)
+"Spikes"). The title marker exists because agent platforms often assign the
+branch name. `gate` still runs on a spike, which is useful to see — but
+`pr-title` is what keeps it from merging.
+
 ## Enforcing project rules
 
 An invariant ([`SPEC.md`](../SPEC.md)) that a machine can check belongs in

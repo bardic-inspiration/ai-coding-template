@@ -15,7 +15,7 @@ scheduled — and you build a project the same way. Delete this file and
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, and the short version of the rules. |
 | [`README.md`](README.md) | Project README skeleton. |
 | [`docs/`](docs/) | Five protocol docs — spec-driven development, workflow (everything Git and GitHub), testing, CI, documentation — and `plans/`, with plan 0001, the initial build. |
-| [`.github/`](.github/) | The CI gate, the PR title check, Dependabot for Actions, issue and PR templates. |
+| [`.github/`](.github/) | The CI gate, the PR title check (which also blocks spikes from merging), Dependabot for Actions, issue and PR templates. |
 | [`.claude/`](.claude/) | `settings.json` (permissions and the SessionStart hook), the hook script, and the `ask-me` / `grill-me` skills. |
 | [`.gitignore`](.gitignore) | Stack-agnostic baseline. |
 | [`LICENSE`](LICENSE) | MIT, with placeholders. |

@@ -1,7 +1,8 @@
 # Workflow
 
 How a change gets from an idea to `main` — issues, branches, commits, pull
-requests, CI, and merging. Everything Git and GitHub lives here.
+requests, CI, and merging — and how a spike explores without getting there.
+Everything Git and GitHub lives here.
 
 Every change takes the same path, whichever mode produced it
 ([`AGENTS.md`](../AGENTS.md) "How work happens"): a task, a branch, a PR with
@@ -87,7 +88,8 @@ in the spec first ([`spec-driven-development.md`](spec-driven-development.md)
 - Branch from `main` as `type/short-description` (`feat/login-form`,
   `fix/empty-list-crash`), using the commit types below. If your agent
   platform assigns the branch name, use it as given.
-- One branch per PR.
+- One branch per PR. A spike's branch is `spike/<question>`
+  ([Spikes](#spikes)).
 - **Once pushed, a branch's history is shared** — another session may have it
   checked out. Add commits; never amend, rebase, or force-push. To catch up
   with `main`, merge it in (or use GitHub's "Update branch"); the squash
@@ -209,6 +211,9 @@ the others, and a PR that was green an hour ago may not be now.
 - **Blocked on something only a human can decide** → say so once on the PR,
   and stop.
 
+**Spike PRs are the exception** ([Spikes](#spikes)): they're red by design, so
+nobody watches or "fixes" them.
+
 In an interactive session, tell the user where things stand; in a routine,
 the PR's own comments are the report. How a session watches is tool-specific
 — for Claude Code, see [`CLAUDE.md`](../CLAUDE.md).
@@ -243,3 +248,44 @@ code change. When in doubt, it's a code change.
   describes that `main` doesn't do yet is marked `Planned`.
 - **Still required:** correct content, links that resolve, cross-references
   updated in the same PR, no process narration in doc content, and the TL;DR.
+
+## Spikes
+
+A spike spends cheap code to buy understanding: whether an approach works,
+which of several designs to pick, what an interface feels like to use. It's
+the one place code is written to be thrown away — so it's the one place the
+rules above are off. What crosses into `main` is what you learned, never the
+code.
+
+1. **Start from a question, not a task:** "Can this sync offline?" "A, B, or
+   C?" Branch `spike/<question>` — or, where the agent platform assigns the
+   branch name, mark it with the PR title instead (step 4).
+2. **Explore freely.** No issue, no tests first, no scope rules, messy commits
+   welcome. Competing approaches can run as parallel spikes.
+3. **Time-box it** to a session or an afternoon. A spike that keeps growing is
+   answering the wrong question.
+4. **Open a draft PR titled `spike: <the question>`** and write the findings
+   in its description — the one required output:
+
+   ```markdown
+   ## Question
+   ## What I tried
+   ## What worked, and what didn't
+   ## Recommendation
+   ## Follow-ups   <!-- the spec edits and issues this led to -->
+   ```
+
+5. **Turn the findings into the real path:** answer the spec's open questions
+   in a docs-only PR, and file issues for the work ("Explored in #N").
+6. **Close the spike PR unmerged**, linking the follow-ups, and delete the
+   branch. The closed PR keeps the diff and the findings on GitHub for good.
+
+The real work then goes through the normal loop — test first, `check`, a PR.
+A session may read the spike for reference, but it rewrites the code rather
+than merging it.
+
+**The guard.** The required `pr-title` check fails any PR whose branch starts
+with `spike/` or whose title starts with `spike:`, so a spike can't be merged
+by accident ([`ci.md`](ci.md) "PR title check"). It catches accidents, not
+decisions: promoting a spike means rebuilding it through the normal loop, not
+retitling it.

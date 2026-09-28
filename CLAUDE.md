@@ -13,10 +13,15 @@ This file adds only what's specific to Claude Code.
 After opening a PR, subscribe to its activity (`subscribe_pr_activity`) and
 end the turn. CI results, review comments, and merge conflicts wake the
 session; handle each one as [`docs/workflow.md`](docs/workflow.md) "Watching
-CI" says. Unsubscribe once the PR is merged or closed.
+CI" says. Unsubscribe once the PR is merged or closed. Don't subscribe to a
+spike's draft PR — it's red by design.
 
 Without that tool (a local session), check before handing back:
 `gh pr checks <number> --watch`.
+
+For a spike in a cloud session, where the branch name is assigned, the
+`spike:` PR title is what marks it ([`docs/workflow.md`](docs/workflow.md)
+"Spikes").
 
 ## Asking questions
 

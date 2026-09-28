@@ -18,19 +18,22 @@ sequenced by the active plans in [`docs/plans/`](docs/plans/README.md).
 
 ## How work happens
 
-Two modes, one standard. Every change reaches `main` the same way — a PR, a
-green check, a human merge — whichever mode produced it.
+Two modes build; a spike explores. Every change reaches `main` the same way
+— a PR, a green check, a human merge — whichever mode produced it. A spike
+never reaches `main` at all ([`docs/workflow.md`](docs/workflow.md)
+"Spikes").
 
-| | Interactive session | Routine |
-|---|---|---|
-| Who's there | The user, in the loop | Nobody, until review |
-| Where the task comes from | Chat, or an issue | An issue: handed to it, or the next in the queue |
-| Where the task is recorded | The PR description — file an issue only for work this session won't do | The issue |
-| When blocked | Ask the user | Say so on the issue or PR, and stop |
-| After opening the PR | Watch CI to green, and report | Watch CI to green |
+| | Interactive session | Routine | Spike |
+|---|---|---|---|
+| Who's there | The user, in the loop | Nobody, until review | Usually the user |
+| Where the task comes from | Chat, or an issue | An issue: handed to it, or the next in the queue | A question |
+| Where the task is recorded | The PR description — file an issue only for work this session won't do | The issue | The findings, in a draft PR |
+| When blocked | Ask the user | Say so on the issue or PR, and stop | Record it — a dead end is a finding |
+| After opening the PR | Watch CI to green, and report | Watch CI to green | File the follow-ups, then close it unmerged |
 
-The thread through both: **the task is the prompt, the PR is the response,
-review is the evaluation, and the squash commit on `main` is the record.**
+The thread through all three: **the task is the prompt, the PR is the
+response, review is the evaluation, and the squash commit on `main` is the
+record** — for a spike, the closed PR's findings are the record.
 
 ## Hard rules
 
@@ -46,6 +49,8 @@ is wrong even if CI is green.
   ([`docs/workflow.md`](docs/workflow.md) "Scope").
 - **A PR you open is yours until it's merged or closed** — watch its CI and
   fix what fails ([`docs/workflow.md`](docs/workflow.md) "Watching CI").
+- **Spike code never merges.** A spike's output is its findings; the real
+  work is rebuilt through the working loop.
 - **The repo is the memory.** Decisions, follow-ups, and open questions go
   into the spec, issues, and PR descriptions — never only into a chat the next
   session can't see.
@@ -86,7 +91,9 @@ Mark anything that doesn't exist yet as "(planned)". -->
    review. A human merges.
 
 Changing only Markdown? Steps 4–5 don't apply
-([`docs/workflow.md`](docs/workflow.md) "Docs-only changes").
+([`docs/workflow.md`](docs/workflow.md) "Docs-only changes"). Running a spike?
+This loop doesn't apply at all ([`docs/workflow.md`](docs/workflow.md)
+"Spikes").
 
 ### Protocol docs — read when
 
@@ -94,7 +101,7 @@ Changing only Markdown? Steps 4–5 don't apply
 |---|---|
 | [`docs/spec-driven-development.md`](docs/spec-driven-development.md) | Reading, writing, or changing `SPEC.md`; the spec is silent or wrong; a change is too big for one PR. |
 | [`docs/plans/README.md`](docs/plans/README.md) | Proposing a plan, opening or closing a phase, or finishing a plan. |
-| [`docs/workflow.md`](docs/workflow.md) | Anything Git or GitHub: taking or filing an issue, scope, branching, committing, opening or watching a PR, merging, docs-only changes. |
+| [`docs/workflow.md`](docs/workflow.md) | Anything Git or GitHub: taking or filing an issue, scope, branching, committing, opening or watching a PR, merging, docs-only changes, spikes. |
 | [`docs/testing.md`](docs/testing.md) | Writing tests. |
 | [`docs/ci.md`](docs/ci.md) | Changing CI or `check`; CI fails in a way you don't understand. |
 | [`docs/documentation.md`](docs/documentation.md) | Writing or editing any doc, naming files, auditing docs for drift. |
