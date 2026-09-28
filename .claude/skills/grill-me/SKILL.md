@@ -45,10 +45,8 @@ whether it survives contact with reality, use this skill.
    attacking it. A challenge that ignores an already-stated constraint just
    wastes the user's time.
 
-2. **Ask one hard question at a time, in plain chat.** This repo's own
-   convention (see `CLAUDE.md`, "Asking questions") applies here too:
-   - Ask **one question per turn**, as regular chat text — never the
-     multiple-choice / question-picker tool.
+2. **Ask one hard question at a time.**
+   - Ask **one question per turn**.
    - Where useful, offer 2–4 concrete answer shapes the user can pick from
      or riff on, but the point of a grill is to make them think, not to make
      picking easy — don't soften a question just to fit a tidy option list.

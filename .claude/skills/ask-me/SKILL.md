@@ -42,10 +42,8 @@ use this skill.
    issue cites) before asking anything — never ask a question the existing
    material already answers.
 
-2. **Ask one question at a time, in plain chat.** This repo's own convention
-   (see `CLAUDE.md`, "Asking questions") applies here too:
-   - Ask **one question per turn**, as regular chat text — never the
-     multiple-choice / question-picker tool.
+2. **Ask one question at a time.**
+   - Ask **one question per turn**.
    - Offer 2–4 concrete, concise suggested answers the user can pick from,
      but make clear they can riff freely instead of choosing one verbatim.
    - Wait for the answer before asking the next question. Let earlier answers

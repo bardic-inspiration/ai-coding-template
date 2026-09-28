@@ -31,14 +31,6 @@ the plan with `sub_issue_write`, and read a plan's progress with
 ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)
 "Plans").
 
-## Asking questions
-
-- When you need to ask the user a question, ask **one question at a time**,
-  through regular chat, with a few suggested options they can pick from or riff
-  on.
-- **Never** use the app's multiple-choice/question-picker widgets — always ask
-  in plain chat text instead.
-
 ## Configuration
 
 | File | What it does |
