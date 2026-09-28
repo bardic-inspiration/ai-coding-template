@@ -104,29 +104,27 @@ description becomes its body. So `git log --oneline` reads as the project's
 changelog, one line per change, and `git show` gives the why without leaving
 the repo.
 
-**Conventional Commits** apply to PR titles (CI checks them) and to branch
-commits:
+**PR titles are Conventional Commits subjects** — CI checks them, because
+each becomes a commit subject on `main`:
 
 ```
 type(scope): imperative subject
-
-Body: WHY, not what — the diff shows what. Wrapped near 72 characters.
-
-Closes #12
-BREAKING CHANGE: what breaks, if anything
 ```
 
 - **Types:** `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, `ci`,
   `build`, `style`.
 - **Scope** (optional): the lowercase name of the package, module, or area.
 - **Breaking changes:** `!` after the type or scope (`feat(api)!: ...`), plus
-  a `BREAKING CHANGE:` footer.
-- **Subject:** imperative, lower-case, no trailing period, ≤ 72 characters —
-  for a PR title, including the ` (#N)`.
+  a `BREAKING CHANGE:` line in the PR description saying what breaks.
+- **Subject:** imperative, lower-case, no trailing period, ≤ 72 characters
+  including the ` (#N)` GitHub appends.
 
-On the branch, commit tests with the code they cover, and make each commit
-one logical step: reviewers read them, and a later session may pick the branch
-up mid-flight.
+The commit's body is the PR description
+([The PR is the record](#the-pr-is-the-record)).
+
+**Branch commits** never reach `main`, so they need no particular format —
+just a message that says what the step did, so a reviewer, or a session
+picking the branch up mid-flight, can follow along.
 
 ### Versioned surfaces
 
