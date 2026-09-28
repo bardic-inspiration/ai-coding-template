@@ -82,8 +82,9 @@ subject longer than 72 characters once GitHub appends ` (#N)`. GitHub's own
 
 ## Enforcing project rules
 
-A hard rule ([`AGENTS.md`](../AGENTS.md) §2) that a machine can check should
-be checked by the gate — as a lint rule or a test — rather than left to
+An invariant ([`SPEC.md`](../SPEC.md)) or hard rule
+([`AGENTS.md`](../AGENTS.md) §2) that a machine can check should be checked
+by the gate — as a lint rule or a test — rather than left to
 convention. Patterns that have worked:
 
 - A **boundary lint rule**: an architectural invariant ("the client never
@@ -95,8 +96,10 @@ convention. Patterns that have worked:
 - A **forbidden-capability check**: "the product makes no network calls", "no
   unseeded randomness in core logic" — enforced by scanning the source.
 
-Record which check enforces which rule next to the rule (or in the doc the
-rule points to), not here.
+Each check names the invariant ID it enforces, in its test name or rule
+message, so `grep INV-n` finds every check for a rule
+([`testing-standards.md`](testing-standards.md) "Tests that guard
+invariants").
 
 ## Runtime matrix
 

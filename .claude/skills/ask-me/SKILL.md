@@ -38,8 +38,8 @@ use this skill.
 ## Process
 
 1. **Read what's already there first.** Skim the request, any linked issue,
-   and the docs it touches (`AGENTS.md`, plus any source of truth the issue
-   cites) before asking anything — never ask a question the existing
+   and the docs it touches (`AGENTS.md`, plus the `SPEC.md` sections the
+   issue cites) before asking anything — never ask a question the existing
    material already answers.
 
 2. **Ask one question at a time, in plain chat.** This repo's own convention
@@ -56,7 +56,7 @@ use this skill.
    - **Purpose** — What problem does this solve? Who feels the pain today?
    - **Success** — What does "done and right" look like? How will you know
      it worked?
-   - **Constraints** — What's fixed (hard rules, deadlines, compatibility)
+   - **Constraints** — What's fixed (invariants, hard rules, deadlines, compatibility)
      and what's actually negotiable?
    - **Scope** — What's explicitly *out* of scope, even if it's tempting to
      include?

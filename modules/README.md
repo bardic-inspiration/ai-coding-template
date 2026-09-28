@@ -4,13 +4,11 @@ Opt-in layers on top of the core template. Each module is a directory whose
 contents are **copied into the repo root** when adopted — paths and relative
 links inside a module are written for their destination, not for where they
 sit in `modules/`. Each module's `README.md` lists the files it adds and the
-edits it makes to core files.
+slots it fills in core files.
 
 Delete this directory once adoption is done (see [`TEMPLATE.md`](../TEMPLATE.md)).
 
-| Module | Adopt when |
-|---|---|
-| [`spec-driven/`](spec-driven/README.md) | The project is built to a written spec over several phases: spec-as-contract, versioned invariants, phase milestones gated by a QA pass, a design-decision track, and conformance audits. |
+No modules are published yet.
 
 ## Planned
 

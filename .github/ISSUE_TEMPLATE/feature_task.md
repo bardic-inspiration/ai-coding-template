@@ -15,11 +15,11 @@ before filing. See docs/issue-standards.md.
 
 <!-- A single outcome that fits in one atomic PR. -->
 
-## Context
+## Spec reference
 
 <!--
-What this builds on: the doc, spec section, or decision it implements, and the
-issue it surfaced from, if any.
+The SPEC.md section this implements, and the plan and phase it belongs to, if
+any. The acceptance criteria below derive from that section's statements.
 
 Depends on #   (delete this line if nothing blocks it)
 -->

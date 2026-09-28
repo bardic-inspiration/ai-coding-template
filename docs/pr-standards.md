@@ -43,8 +43,8 @@ so the record matches what actually landed.
 - **Link exactly one issue** with `Closes #N`
   ([`issue-standards.md`](issue-standards.md)). Trivial docs fixes may omit it
   ([`docs-only-changes.md`](docs-only-changes.md)).
-- **Say where the change comes from** — the doc, spec section, or decision the
-  issue implements — so a reader can trace commit → PR → issue → source.
+- **Say where the change comes from** — the `SPEC.md` section the issue
+  implements — so a reader can trace commit → PR → issue → spec.
 
 ## Pre-flight checklist
 
@@ -56,7 +56,9 @@ description so it doesn't repeat in every commit on `main`.
 - [ ] Tests written first, and passing.
 - [ ] Gate green locally ([`AGENTS.md`](../AGENTS.md) §5).
 - [ ] Branch commits are Conventional Commits; tests committed with their code.
-- [ ] Docs updated if behavior changed.
+- [ ] `SPEC.md` describes the behavior as merged — updated in this PR if
+      behavior changed, and any `Planned` marker this PR fulfils removed.
+- [ ] Other docs updated if behavior changed.
 - [ ] Scoped to the linked issue only; hard rules ([`AGENTS.md`](../AGENTS.md)
       §2) still hold.
 - [ ] 1–4 screenshots attached, if the UI changed.

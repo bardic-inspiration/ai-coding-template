@@ -4,10 +4,9 @@ Keep docs truthful and in sync with behavior. Documentation drift is a defect.
 
 ## Source of truth
 
-<!-- TEMPLATE: if the project has a source of truth for what to build (a spec,
-a design doc), add it as a second bullet: "`SPEC.md` is authoritative for
-**what to build**; code conforms to it, not the other way around." -->
-
+- [`SPEC.md`](../SPEC.md) is authoritative for **what to build**; code
+  conforms to it, not the other way around
+  ([`spec-driven-development.md`](spec-driven-development.md)).
 - [`AGENTS.md`](../AGENTS.md) is authoritative for **how to work**.
 - Every fact has **one home.** Other docs describe it briefly and link there
   rather than restating it — duplication drifts. When a doc needs a detail,
@@ -31,6 +30,16 @@ a design doc), add it as a second bullet: "`SPEC.md` is authoritative for
   mechanics doc, so updating the mechanics never means diffing the rules.
 - **Relative links.** Cross-reference other docs with relative Markdown links,
   not bare file names in code spans.
+
+## Present tense; history lives in git
+
+- Docs describe the project **as it is now**. Plans describe the active
+  future and are deleted when done; the past lives in git — squash commits,
+  PRs, and issues ([`spec-driven-development.md`](spec-driven-development.md)
+  "Three tenses, three homes").
+- A doc that has done its job is deleted, not moved to an archive folder.
+  Superseded text is replaced, not struck through or annotated with when it
+  changed.
 
 ## Product docs, not process
 

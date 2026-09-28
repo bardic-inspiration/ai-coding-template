@@ -8,10 +8,11 @@ and code. Every doc that names the same thing uses the same spelling
 
 - Root and package meta-files keep the standard open-source convention of
   `ALL-CAPS.md`: `README.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `LICENSE`,
-  `AGENTS.md`, `CLAUDE.md` (and `SPEC.md`, where there is one).
+  `AGENTS.md`, `CLAUDE.md`, `SPEC.md`.
 - Everything under `docs/`: `kebab-case.md` (`testing-standards.md`).
-- Decision records, if the project keeps them: `NNNN-kebab-case.md`,
-  zero-padded and never renumbered.
+- Plans: `docs/plans/NNNN-kebab-case.md`, zero-padded; a number is never
+  reused, even after its plan is deleted.
+- Spec areas, once the spec is split: `docs/spec/<area>.md`.
 
 ## Git & process
 
@@ -20,7 +21,7 @@ and code. Every doc that names the same thing uses the same spelling
 - **Commit and PR types, scopes:** [`commit-standards.md`](commit-standards.md).
   Scopes are the lowercase name of the package, module, or area.
 - **Labels:** lowercase, colon-scoped where hierarchical (`task`, `bug`,
-  `needs-discussion`, `phase:2`) — the label set lives in
+  `needs-discussion`, `area:parser`) — the label set lives in
   [`issue-standards.md`](issue-standards.md) "Labels".
 - **Stable IDs** that docs cite (invariants, decisions): short uppercase prefix
   plus number — `INV-3`, `D2`. Never reuse or renumber an ID; retire it.

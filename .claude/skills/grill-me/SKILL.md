@@ -39,8 +39,9 @@ whether it survives contact with reality, use this skill.
 ## Process
 
 1. **Read the plan and its context first.** Understand exactly what is being
-   proposed, and read the parts of `AGENTS.md` and any source of truth it
-   touches — especially the hard rules (`AGENTS.md` §2) — before
+   proposed, and read the parts of `SPEC.md` and `AGENTS.md` it touches —
+   especially the invariants (`SPEC.md`) and hard rules (`AGENTS.md` §2) —
+   before
    attacking it. A challenge that ignores an already-stated constraint just
    wastes the user's time.
 
@@ -58,8 +59,8 @@ whether it survives contact with reality, use this skill.
    roughly 5–10 questions, drawn from categories like:
    - **Edge cases** — What's the smallest/largest/emptiest/most malformed
      input this has to survive? What happens at zero, one, and "too many"?
-   - **Hard-rule checks** — Does this plan hold every hard rule the project
-     requires, or does it quietly assume one away?
+   - **Invariant checks** — Does this plan hold every invariant and hard rule
+     the project requires, or does it quietly assume one away?
    - **Failure modes** — What's the first thing that breaks under load, bad
      data, or a step done out of order? How would you *know* it broke?
    - **Assumptions** — What is this plan silently assuming about the caller,

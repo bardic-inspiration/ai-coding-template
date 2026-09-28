@@ -2,14 +2,22 @@
 
 The periodic staleness and consistency check that keeps the doc set truthful.
 
-The docs — `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`, `README.md`, and
-everything under `docs/` — are a **living, periodically reconciled** artifact,
-not a write-once record. Documentation drift is a defect
+The docs — `SPEC.md`, `AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`,
+`README.md`, and everything under `docs/` — are a **living, periodically
+reconciled** artifact, not a write-once record. Documentation drift is a defect
 ([`documentation-standards.md`](documentation-standards.md)); this audit is
 what lets a cold-start session trust that the docs are current.
 
 ## What the audit checks
 
+- **The spec describes `main`.** No stale statements; no `Planned` marker
+  whose plan is finished or gone; no history — version annotations,
+  amendment tables, past-tense narration
+  ([`spec-driven-development.md`](spec-driven-development.md) "Keeping it
+  lean").
+- **Only live documents.** `docs/plans/` holds only active plans, resolved
+  open questions are gone from the spec, and no doc exists only as a record
+  of finished work — git holds that.
 - **Stale status.** Any status the docs report (what's built, what's next,
   milestone state) matches the actual issue, PR, and milestone state on GitHub.
 - **Links resolve.** Every relative link points at a file — and, for anchors,

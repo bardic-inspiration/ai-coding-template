@@ -34,12 +34,13 @@ directory. -->
   order. Inject a clock, seed the random source, stub the network.
 - A flaky test is a defect to fix, not a reason to re-run CI until it passes.
 
-## Tests that guard hard rules
+## Tests that guard invariants
 
-Every hard rule in [`AGENTS.md`](../AGENTS.md) §2 that a machine can check
-should have a test or lint rule that fails when the rule breaks — rather than
-relying on reviewers to notice. Name the rule in the test so a failure points
-straight at it.
+Every invariant in [`SPEC.md`](../SPEC.md) — and every hard rule in
+[`AGENTS.md`](../AGENTS.md) §2 — that a machine can check should have a test
+or lint rule that fails when it breaks, rather than relying on reviewers to
+notice. Name the invariant's ID in the test or rule (`INV-2`), so a failure
+points straight at it and `grep INV-2` finds everything that enforces it.
 
 Lessons that carry across projects:
 

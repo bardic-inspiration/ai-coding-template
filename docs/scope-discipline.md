@@ -30,12 +30,14 @@ one will.
   the PR may expand. Split the extra ground into new issues and keep the PR
   narrow.
 
-## Out-of-scope list
+## Out-of-scope lists
 
-<!-- TEMPLATE: link the project's explicit list of tempting-but-out-of-scope
-work (a README "Non-goals" section, a spec's post-release list). Those items
-look adjacent and are the likeliest source of creep. Delete this section if
-there is no such list yet. -->
+Two lists name the tempting-but-out-of-scope work — the likeliest source of
+creep, because it looks adjacent:
+
+- [`SPEC.md`](../SPEC.md) "Purpose & non-goals" — what the project never does.
+- Each active plan's "Out of scope" ([`plans/`](plans/README.md)) — what this
+  stretch of work leaves for later.
 
 ## Examples
 

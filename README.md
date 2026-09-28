@@ -20,6 +20,8 @@ a status restated in two places drifts. -->
 This project is developed largely by AI coding agents working in small,
 verifiable steps:
 
+0. [`SPEC.md`](SPEC.md) is the source of truth for what to build; work too big
+   for one PR is sequenced by a plan in [`docs/plans/`](docs/plans/README.md).
 1. Work is sliced into PR-sized GitHub issues with testable acceptance
    criteria ([`docs/issue-standards.md`](docs/issue-standards.md)).
 2. Agent sessions — memoryless, often scheduled — each take one issue, follow

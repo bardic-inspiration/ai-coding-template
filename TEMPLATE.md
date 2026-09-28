@@ -12,10 +12,12 @@ is done.
 | Path | Purpose |
 |---|---|
 | [`AGENTS.md`](AGENTS.md) | The canonical working guide: hard rules, working loop, routing table to every standards doc, command table. |
+| [`SPEC.md`](SPEC.md) | The spec skeleton — right-size it: keep the parts the project needs ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)). |
 | [`CLAUDE.md`](CLAUDE.md) | Claude Code–specific conventions (one question at a time; never watch PRs). |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, plus the short version of the rules. |
 | [`README.md`](README.md) | Project README skeleton, including "How this repo is built". |
-| [`docs/`](docs/) | Protocol docs — issues, PRs, commits, testing, CI, scope, docs-only path, documentation standards, naming, doc audit. |
+| [`docs/`](docs/) | Protocol docs — spec-driven development, issues, PRs, commits, testing, CI, scope, docs-only path, documentation standards, naming, doc audit. |
+| [`docs/plans/`](docs/plans/README.md) | Plan format and lifecycle, and plan 0001 — the initial build. |
 | [`.github/`](.github/) | Stack-agnostic CI gate; PR-title check; issue templates (task, bug, docs); PR template. |
 | [`.claude/skills/`](.claude/skills/) | `ask-me` (form intent) and `grill-me` (stress-test a plan). |
 | [`.gitignore`](.gitignore) | Stack-agnostic baseline. |
@@ -24,10 +26,9 @@ is done.
 
 ### Modules — opt in
 
-See [`modules/README.md`](modules/README.md). Currently:
-[`spec-driven`](modules/spec-driven/README.md), for projects built to a written
-spec over several phases. Stack modules (Node, Python, …) are planned; until
-then, the stack-shaped slots are marked `TEMPLATE:` and filled by hand.
+See [`modules/README.md`](modules/README.md). Stack modules (Node, Python, …)
+are planned; until then, the stack-shaped slots are marked `TEMPLATE:` and
+filled by hand.
 
 ## Conventions
 
@@ -48,19 +49,21 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
 |---|---|---|
 | `{{PROJECT_NAME}}` | README | Human-readable project name. |
 | `{{PROJECT_SUMMARY}}` | README | One paragraph: what, for whom, what it isn't. |
-| `{{PROJECT_PURPOSE}}` | AGENTS.md §1 | 2–5 sentences of purpose and scope. |
+| `{{PROJECT_PURPOSE}}` | SPEC.md | A paragraph of purpose and audience; non-goals follow it. |
 | `{{REPO_SLUG}}` | CONTRIBUTING, issue config, PR standards | `owner/repo`. |
 | `{{REPO_NAME}}` | CONTRIBUTING | `repo`. |
 | `{{INSTALL_CMD}}` … `{{RUN_CMD}}` | AGENTS.md §5, CONTRIBUTING | The stack's commands — and mirror them in `ci.yml`'s `env:` block. |
 | `{{YEAR}}`, `{{COPYRIGHT_HOLDER}}` | LICENSE | Copyright line. |
 | `{{START_DATE}}` | .llm-facts.yml | When AI-assisted development began. |
-| `{{INVARIANT}}`, `{{PHASE_1_NAME}}` | spec-driven module | The first invariant and the first real build phase. |
+| `{{INVARIANT_NAME}}`, `{{INVARIANT}}` | SPEC.md | The first invariant's short name and statement. |
+| `{{PLAN_0001_GOAL}}`, `{{FIRST_RELEASE}}`, `{{PHASE_1_NAME}}` | docs/plans/ | The initial build's goal, its target release, and its first real phase. |
 
 ## Adopting
 
 1. **Create the repo** from this template.
-2. **Choose modules.** Copy each module you adopt into the root and apply the
-   core-file edits its README lists.
+2. **Write the spec, right-sized**, and shape plan 0001's phases
+   ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)).
+   Set `SPEC.md`'s status to `building` when Phase 0 opens.
 3. **Fill placeholders and resolve `TEMPLATE:` comments** — each one either
    becomes content or is deleted.
 4. **Wire the gate.** Fill the command table in `AGENTS.md` §5 and the `env:`

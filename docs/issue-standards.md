@@ -20,21 +20,22 @@ instead of getting lost or silently folded in.
 - Scope work to **that issue only** — don't range ahead, and don't pull in
   adjacent cleanup that isn't part of the acceptance criteria.
 
-<!-- TEMPLATE: modules may extend the queue rule (e.g. spec-driven: pick only
-from the active phase's label, interleaved with audit findings). Record the
-extension here so this stays the one place the queue is defined. -->
+Plans don't change the queue: a plan's issues are filed only when their phase
+opens ([`plans/README.md`](plans/README.md)), so everything in the queue is
+ready to build.
 
 ## Filing an issue
 
 Use the template that fits:
 
 - **[Feature / task](../.github/ISSUE_TEMPLATE/feature_task.md)** — a new
-  capability or change sized for one PR. Requires: goal, context (what it
-  builds on), testable acceptance criteria, and an explicit "Out of scope".
+  capability or change sized for one PR. Requires: goal, the `SPEC.md`
+  section it implements, testable acceptance criteria derived from that
+  section, and an explicit "Out of scope".
 - **[Bug report](../.github/ISSUE_TEMPLATE/bug_report.md)** — behavior that
   contradicts the docs or reasonable expectation. Requires: what happened,
-  what was expected (cite the doc that says so), a minimal reproduction, and
-  environment.
+  what was expected (cite the `SPEC.md` section that says so), a minimal
+  reproduction, and environment.
 - **[Docs change](../.github/ISSUE_TEMPLATE/docs_change.md)** — a substantive
   Markdown-only change ([`docs-only-changes.md`](docs-only-changes.md)).
 
@@ -86,10 +87,11 @@ traceability:
 
 - **Don't solve it inline.** Finish the issue you were given first. An open
   question is not license to widen the current PR.
-- **Ambiguity or a defect in the source of truth** (the acceptance criteria
-  conflict with the docs, or the docs look wrong) → don't silently invent
-  behavior. Raise it on the issue; if the docs are wrong, fix them deliberately
-  before writing code that guesses.
+- **The spec is silent, ambiguous, or wrong** (the acceptance criteria
+  conflict with `SPEC.md`, or the spec looks wrong) → don't silently invent
+  behavior. Add an open question to the spec and raise it on the issue; resolve
+  it by editing the spec before writing code that guesses
+  ([`spec-driven-development.md`](spec-driven-development.md)).
 - **Everything else** (an out-of-scope edge case, a deferred feature, tech
   debt, a later idea) → file it as a **new issue** using the rules above — not
   a `TODO` comment, and not a note buried in a PR description where it will rot.

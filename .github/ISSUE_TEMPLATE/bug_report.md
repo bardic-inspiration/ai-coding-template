@@ -12,7 +12,7 @@ assignees: ""
 
 ## Expected
 
-<!-- What should happen, and the doc or spec section that says so. -->
+<!-- What should happen, and the SPEC.md section that says so. -->
 
 ## Reproduction
 
@@ -25,7 +25,7 @@ whatever pins it down (seed, input, config). -->
 
 ## Notes
 
-<!-- Which hard rule (AGENTS.md §2), if any, this touches. -->
+<!-- Which invariant (SPEC.md) or hard rule (AGENTS.md §2), if any, this touches. -->
 
 ## TL;DR
 

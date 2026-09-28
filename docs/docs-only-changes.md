@@ -23,6 +23,10 @@ protocol. When in doubt, treat it as a code change.
   acceptance criteria to test, since there's no code.
 - **Trivial, mechanical** fixes (typos, broken links, formatting, a stale
   status line) need no issue — open the PR directly, without `Closes #N`.
+- **A `SPEC.md` change** follows
+  [`spec-driven-development.md`](spec-driven-development.md) whichever path it
+  takes: anything it describes that `main` doesn't do yet is marked
+  `Planned`.
 
 ## PR & commit
 
