@@ -19,7 +19,7 @@ it can't talk its way past.
 
 ## Organization
 
-<!-- TEMPLATE: filled in by the stack module — the runner, where tests live
+<!-- TEMPLATE: Phase 0 fills this in — the runner, where tests live
 (co-located `foo.test.*` or a `tests/` tree), file naming, and the fixture
 directory. -->
 

@@ -1,4 +1,4 @@
-# Stack-agnostic baseline. A stack module appends its own entries
+# Stack-agnostic baseline. Phase 0 appends the stack's entries
 # (dependency directories, caches, build output specific to the toolchain).
 
 # Build / test output

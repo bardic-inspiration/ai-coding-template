@@ -64,7 +64,7 @@ defect.
 
 ### Code
 
-<!-- TEMPLATE: filled in by the stack module — identifier casing (variables,
+<!-- TEMPLATE: Phase 0 fills this in — identifier casing (variables,
 functions, types, constants), source-file and package naming, and any
 deliberate split between code identifiers and wire or data field names (e.g.
 `camelCase` in code, `snake_case` in JSON). State a split explicitly, so it
@@ -89,5 +89,5 @@ The docs are reconciled periodically, not continuously. An audit checks that:
   comments from adoption.
 
 Any session may open a docs-only PR to fix drift it spots while working. A
-broader pass is filed as its own docs issue. Doc fixes never ride along in an
+broader pass is filed as its own issue. Doc fixes never ride along in an
 unrelated code PR.

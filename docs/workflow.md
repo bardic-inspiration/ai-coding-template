@@ -28,16 +28,15 @@ the next session — or you, next month — can find it.
   exists, and what changes once it's done.
 
 The [templates](../.github/ISSUE_TEMPLATE/) lay these out — Feature / task,
-Bug report, Docs change. They apply only in GitHub's web form; an agent filing
+Bug report, Plan. They apply only in GitHub's web form; an agent filing
 through the API writes the same sections itself.
 
 ### Labels
 
 | Label | Meaning |
 |---|---|
-| `task` | A feature or change sized for one PR. In the queue. |
+| `task` | A feature or change — code or docs — sized for one PR. In the queue. |
 | `bug` | Behavior that contradicts the spec. In the queue. |
-| `documentation` | A substantive docs-only change. |
 | `plan` | A plan: phases and done-criteria for work bigger than one PR, with its tasks as sub-issues ([`spec-driven-development.md`](spec-driven-development.md) "Plans"). Not in the queue itself. |
 | `needs-discussion` | Needs a human decision before anyone builds it — usually a design interview (`ask-me`, `grill-me`), with the decisions recorded as a comment and the acceptance criteria rewritten and confirmed. Out of the queue until the label comes off. |
 
@@ -159,6 +158,9 @@ the record matches what landed.
   states the task and its acceptance criteria in the Summary instead.
 - **Say where it comes from** — the `SPEC.md` section it implements — so a
   reader can trace commit → PR → issue → spec.
+- **Point the reviewer at the judgment calls:** anything you chose between
+  options on, anything risky, anything you're unsure of. A PR with none says
+  so by omission — don't invent one.
 - **End with a `## TL;DR`:** plain-English bullets — why, and what changes.
   It's the reviewer's fast path, and it lands in history as the plain-English
   line of the project.
@@ -176,6 +178,7 @@ commit on `main`.
       changed, and any `Planned` marker this PR fulfils removed.
 - [ ] Other docs updated if behavior changed.
 - [ ] One concern, scoped to its task; the invariants still hold.
+- [ ] Own diff read against the acceptance criteria, and fixed.
 - [ ] Screenshots attached, if the UI changed.
 - [ ] Title and description written for `git log`.
 
@@ -198,14 +201,14 @@ link by commit SHA so the link survives the folder being pruned —
 ## Watching CI
 
 **A PR you open is yours until it's merged or closed.** Opening it isn't the
-end of the task: with several PRs open at once, each merge moves `main` under
-the others, and a PR that was green an hour ago may not be now.
+end of the task.
 
 - **Red check** → read the log, fix the cause on the same branch, push. Never
   skip, disable, or weaken a test to get green. If the failure isn't this PR's
   (it's red on `main` too), say so once on the PR instead of fixing it here.
-- **Behind `main`, or conflicting** → merge `main` in, resolve, run `check`,
-  push.
+- **Conflicting with `main`** → merge `main` in, resolve, run `check`, push.
+  A branch that is merely behind needs nothing: `gate` runs again on `main`
+  after the merge.
 - **Review comments** → fix and push, or answer why not, on the thread.
 - **Blocked on something only a human can decide** → say so once on the PR,
   and stop.
@@ -217,18 +220,32 @@ In an interactive session, tell the user where things stand; in a routine,
 the PR's own comments are the report. How a session watches is tool-specific
 — for Claude Code, see [`CLAUDE.md`](../CLAUDE.md).
 
-## Merging
+## Review and merging
 
 <!-- TEMPLATE: confirm who merges. The default keeps a human in the loop on
 every change. -->
 
 - **A human reviews and merges.** Agents open and fix PRs; they don't merge
   them.
-- Merge when `gate` and `pr-title` are green on the latest commit, the branch
-  is up to date with `main`, and review threads are resolved. After reviewing,
-  **"Enable auto-merge"** lets GitHub merge the moment that's all true.
+- **Review is for intent; machines check the rest.** The reviewer's attention
+  is the scarce resource, so it goes where nothing else can stand in for it —
+  is this the right change? Read, in order: the TL;DR, the `SPEC.md` diff, the
+  tests (do they state the behavior that was asked for?), the screenshots, and
+  whatever the description flags as a judgment call. Read the code itself
+  where a mistake is expensive: an invariant, a versioned surface, anything
+  touching security or deleting data.
+- **Mechanics belong to `check` and the author's self-review**
+  ([`AGENTS.md`](../AGENTS.md) "Working loop"). A quality problem that review
+  catches twice becomes a lint rule or a test in `check`
+  ([`ci.md`](ci.md) "Enforcing project rules"), not a thing to keep watching
+  for.
+- Merge when `gate` and `pr-title` are green on the latest commit and review
+  threads are resolved. After reviewing, **"Enable auto-merge"** lets GitHub
+  merge the moment that's true.
 - Land with **"Squash and merge,"** and check the pre-filled message reads
   well as a commit.
+- **If `gate` goes red on `main`** — two PRs, each green alone, that don't
+  work together — fixing or reverting comes before merging anything else.
 - **Dependency updates** from Dependabot need no issue: read what changed, and
   merge when green.
 
@@ -240,8 +257,8 @@ code change. When in doubt, it's a code change.
 
 - **Skip:** writing tests first, and running `check`. CI skips the gate on a
   Markdown-only diff by itself ([`ci.md`](ci.md)).
-- **Issues:** a substantive change (a new doc, a rule change) gets one, using
-  the Docs change template; a trivial fix (a typo, a broken link) doesn't.
+- **Issues:** as for any task — only for work this session won't do itself
+  ([Issues](#issues)).
 - **A `SPEC.md` change** follows
   [`spec-driven-development.md`](spec-driven-development.md): anything it
   describes that `main` doesn't do yet is marked `Planned`.
