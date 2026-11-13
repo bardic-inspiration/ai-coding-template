@@ -13,7 +13,7 @@ adoption is done.
 | [`SPEC.md`](SPEC.md) | The spec skeleton — right-size it ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)). |
 | [`CLAUDE.md`](CLAUDE.md) | Imports `AGENTS.md` for Claude Code, and adds its specifics: cloud sessions, self-review, PR watching, configuration, skills. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, and the short version of the rules. |
-| [`README.md`](README.md) | Project README skeleton. |
+| [`README.md`](README.md) | Describes the template itself; adoption replaces it with the project's own. |
 | [`docs/`](docs/) | Five protocol docs: spec-driven development (including plans), workflow (everything Git and GitHub), testing, CI, and documentation. |
 | [`.github/`](.github/) | The CI gate; the PR title check, which also blocks spikes from merging; Dependabot for Actions; issue templates (task, bug, plan); the PR template. |
 | [`.claude/`](.claude/) | `settings.json` (permissions and the SessionStart hook), the hook script, and the `ask-me` / `grill-me` skills. |
@@ -42,8 +42,7 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
 
 | Placeholder | Where | Value |
 |---|---|---|
-| `{{PROJECT_NAME}}` | README, SPEC.md | Human-readable project name. |
-| `{{PROJECT_SUMMARY}}` | README | One public-facing paragraph: what, and for whom. |
+| `{{PROJECT_NAME}}` | SPEC.md | Human-readable project name. |
 | `{{PROJECT_PURPOSE}}` | SPEC.md | Purpose and audience; the non-goals follow it. |
 | `{{REPO_SLUG}}`, `{{REPO_NAME}}` | CONTRIBUTING, issue config, workflow.md | `owner/repo`, and `repo`. |
 | `{{INSTALL_CMD}}`, `{{CHECK_CMD}}`, `{{FIX_CMD}}`, `{{TEST_CMD}}`, `{{RUN_CMD}}` | AGENTS.md "Commands", CONTRIBUTING, `.claude/settings.json` | The stack's commands; `CHECK_CMD` is the gate. |
@@ -91,7 +90,34 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
    ```
 
    Then set `SPEC.md`'s status to `building`.
-5. **Clean up:** delete this file and the README banner.
+5. **Replace [`README.md`](README.md)** — it describes the template — with
+   the project's own:
+
+   ```markdown
+   # <project name>
+
+   <One paragraph: what this is and who it's for. SPEC.md holds the detailed
+   purpose and non-goals.>
+
+   ## Status
+
+   <One line on where the project stands, and a link to the open plan issues
+   rather than a copy of them.>
+
+   ## Development
+
+   Built largely by AI coding sessions, with a human reviewing and merging
+   every change. Start with [`AGENTS.md`](AGENTS.md); setup is in
+   [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+   ## License
+
+   <Match LICENSE.>
+   ```
+
+   To publish an [LLM Facts](https://github.com/bardic-inspiration/llm-facts)
+   label, fill in `.llm-facts.yml` and add the rendered label to the README;
+   otherwise delete that file. Then delete this file.
 6. **Audit.** The grep above returns nothing, and every relative link resolves
    ([`docs/documentation.md`](docs/documentation.md) "Doc audit").
 
