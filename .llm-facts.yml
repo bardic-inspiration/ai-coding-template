@@ -1,8 +1,8 @@
 # .llm-facts.yml — LLM Facts label source (optional AI-usage disclosure).
 #
 # TEMPLATE: optional. Fill in as the project accrues history, then render the
-# label (see README.md "LLM Facts"). Delete this file if the project doesn't
-# publish a label.
+# label into the README (https://github.com/bardic-inspiration/llm-facts).
+# Delete this file if the project doesn't publish a label.
 #
 # Formatting only: this file describes a label; llm-facts does not verify it.
 # Leave label.verified false unless the figures are independently verified.
