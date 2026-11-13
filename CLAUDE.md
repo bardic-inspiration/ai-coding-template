@@ -8,6 +8,21 @@ so it imports the guide here:
 
 This file adds only what's specific to Claude Code.
 
+## Cloud sessions
+
+- **One task per session.** A fresh session starts with a clean context and
+  a fresh branch; a long one re-reads its own history on every turn.
+- **The branch name is assigned** — use it as given. To start another task in
+  the same session after its PR merged, restart the branch from the new
+  `main` (`git fetch origin main && git checkout -B <branch> origin/main`).
+  The merged branch was deleted on GitHub, so the push needs no force.
+
+## Self-review
+
+Before opening a PR that changes code, run `/code-review` on the branch's
+diff and fix what it confirms ([`AGENTS.md`](AGENTS.md) "Working loop", step
+6). Skip it for docs-only changes and spikes.
+
 ## Watching PRs
 
 After opening a PR, subscribe to its activity (`subscribe_pr_activity`) and

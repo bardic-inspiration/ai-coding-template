@@ -90,5 +90,5 @@ required checks to match.
 
 ## Not covered yet
 
-Candidates for later modules: release and deploy workflows, code and secret
-scanning, and coverage thresholds.
+Release and deploy workflows, code and secret scanning, and coverage
+thresholds. Add each when the project needs it.

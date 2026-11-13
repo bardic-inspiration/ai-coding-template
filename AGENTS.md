@@ -77,7 +77,11 @@ Mark anything that doesn't exist yet as "(planned)". -->
 
 1. **Take one task.** Interactive: from chat, or an issue. Routine: the issue
    you were handed, or the next in the queue
-   ([`docs/workflow.md`](docs/workflow.md) "The queue").
+   ([`docs/workflow.md`](docs/workflow.md) "The queue"). If it changes
+   behavior and has no acceptance criteria yet, propose them — with the spec
+   edit they imply — and get a yes before building. That is the cheapest
+   place to catch a wrong direction; a small fix with an obvious outcome
+   doesn't need it.
 2. **Read before you write:** the task, the `SPEC.md` sections it cites, and
    every doc it references. `git log` on the files you'll touch is context
    too — each commit on `main` is one whole PR, with its why in the body.
@@ -85,7 +89,11 @@ Mark anything that doesn't exist yet as "(planned)". -->
 4. **Test first.** A failing test, the minimal code to pass it, then refactor
    ([`docs/testing.md`](docs/testing.md)).
 5. **Run `check`** (Commands, below). Green before every push.
-6. **Open one PR.** Its title and description become the commit on `main`
+6. **Review your own diff, then open one PR.** Read the whole diff against
+   the acceptance criteria and the hard rules, and fix what you find — the
+   human review is for intent, not for catching what you could have
+   ([`docs/workflow.md`](docs/workflow.md) "Review and merging"). The PR's
+   title and description become the commit on `main`
    ([`docs/workflow.md`](docs/workflow.md) "Pull requests"). If it changes
    behavior, it updates `SPEC.md` too.
 7. **Watch it to green** — fix red CI and conflicts on the same branch, answer
@@ -108,8 +116,7 @@ This loop doesn't apply at all ([`docs/workflow.md`](docs/workflow.md)
 
 ## Commands
 
-<!-- TEMPLATE: fill in from the project's stack (a stack module supplies
-these — see TEMPLATE.md). -->
+<!-- TEMPLATE: fill in from the project's stack (Phase 0 — see TEMPLATE.md). -->
 
 | Task | Command |
 |---|---|

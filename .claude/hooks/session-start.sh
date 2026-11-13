@@ -10,7 +10,7 @@ fi
 
 cd "${CLAUDE_PROJECT_DIR:-.}"
 
-# TEMPLATE: install dependencies here (a stack module fills this in). The
+# TEMPLATE: install dependencies here (Phase 0 fills this in). The
 # container is cached once this hook completes, so prefer the install form
 # that reuses what's already there (e.g. `npm install` over `npm ci`). Keep it
 # idempotent and non-interactive.

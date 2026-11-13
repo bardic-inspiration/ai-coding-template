@@ -2,8 +2,9 @@
 #
 # The gate is one command, `check` (AGENTS.md "Commands"), that you, agents,
 # and CI all run. The initial build's Phase 0 wires it in below (TEMPLATE.md
-# "Adopting"): toolchain setup, install, check. A Markdown-only diff skips all three, but the job still runs
-# and reports green, so `gate` can be a required status check.
+# "Adopting"): toolchain setup, install, check. A Markdown-only diff skips all
+# three, but the job still runs and reports green, so `gate` can be a required
+# status check.
 
 name: CI
 
@@ -18,7 +19,9 @@ permissions:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Cancel superseded runs on a PR, but let every push to main finish, so
+  # each commit on main has a result.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   gate:

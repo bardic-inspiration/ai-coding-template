@@ -60,8 +60,9 @@ long accounts of rejected alternatives (the PR).
   body ([`workflow.md`](workflow.md) "The PR is the record").
 - **Say when something isn't built yet.** Everything in the spec is true of
   `main`, except text marked **`Planned (#N):`**, where `#N` is the plan
-  issue building it. The PR that makes it true removes the marker. During a greenfield build, the header's
-  `status: building` covers the whole spec instead.
+  issue building it. The PR that makes it true removes the marker. During a
+  greenfield build, the header's `status: building` covers the whole spec
+  instead.
 - **Cite by ID, not position.** Refer to invariants and sections by ID or
   heading, not by numbers that shift when the spec is reorganized.
 - **One home per fact** ([`documentation.md`](documentation.md)).
@@ -121,14 +122,8 @@ the spec.
 
 ## Keeping it lean
 
-The doc audit ([`documentation.md`](documentation.md) "Doc audit") checks that:
-
-- the spec describes `main` — no stale statements, and no `Planned` marker
-  whose plan issue is closed;
-- the spec carries no history — no version annotations, amendment tables, or
-  past-tense narration;
-- resolved open questions are gone, and nothing future-tense or finished
-  lives as a file in the tree.
+The doc audit ([`documentation.md`](documentation.md) "Doc audit") checks that
+the spec still describes `main` and carries no history.
 
 Periodically, a **conformance audit** checks `main` against the whole spec,
 including the seams no single issue owned. Its findings are ordinary `bug` and

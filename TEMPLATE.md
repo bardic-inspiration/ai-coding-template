@@ -2,27 +2,28 @@
 
 How to turn this template into a new project's working standard: the docs,
 templates, CI, and Claude Code setup that let AI sessions — interactive or
-scheduled — and you build a project the same way. Delete this file and
-[`modules/`](modules/) once adoption is done.
+scheduled — and you build a project the same way. Delete this file once
+adoption is done.
 
 ## What's in the box
 
 | Path | Purpose |
 |---|---|
-| [`AGENTS.md`](AGENTS.md) | The canonical guide for any agent: the two modes, hard rules, working loop, routing table, commands. |
+| [`AGENTS.md`](AGENTS.md) | The canonical guide for any agent: the modes, hard rules, working loop, routing table, commands. |
 | [`SPEC.md`](SPEC.md) | The spec skeleton — right-size it ([`docs/spec-driven-development.md`](docs/spec-driven-development.md)). |
-| [`CLAUDE.md`](CLAUDE.md) | Imports `AGENTS.md` for Claude Code, and adds its specifics: PR watching, configuration, skills. |
+| [`CLAUDE.md`](CLAUDE.md) | Imports `AGENTS.md` for Claude Code, and adds its specifics: cloud sessions, self-review, PR watching, configuration, skills. |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Human setup, and the short version of the rules. |
 | [`README.md`](README.md) | Project README skeleton. |
 | [`docs/`](docs/) | Five protocol docs: spec-driven development (including plans), workflow (everything Git and GitHub), testing, CI, and documentation. |
-| [`.github/`](.github/) | The CI gate; the PR title check, which also blocks spikes from merging; Dependabot for Actions; issue templates (task, bug, docs, plan); the PR template. |
+| [`.github/`](.github/) | The CI gate; the PR title check, which also blocks spikes from merging; Dependabot for Actions; issue templates (task, bug, plan); the PR template. |
 | [`.claude/`](.claude/) | `settings.json` (permissions and the SessionStart hook), the hook script, and the `ask-me` / `grill-me` skills. |
 | [`.gitignore`](.gitignore) | Stack-agnostic baseline. |
 | [`LICENSE`](LICENSE) | MIT, with placeholders. |
 | [`.llm-facts.yml`](.llm-facts.yml) | Optional AI-usage disclosure label source. |
 
-Stack modules (Node, Python, …) are planned ([`modules/README.md`](modules/README.md));
-until then, the stack-shaped slots are marked `TEMPLATE:` and filled by hand.
+The template is stack-agnostic: the stack-shaped slots (commands, the CI
+gate, the install hook, test layout, code naming) are marked `TEMPLATE:`, and
+Phase 0 of the initial build fills them.
 
 ## Conventions
 
@@ -75,8 +76,11 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
    - The gate in `.github/workflows/ci.yml` — toolchain setup (pinned, with
      caching), install from the lockfile, `check` — replacing the "Gate not
      wired yet" step (docs/ci.md).
-   - The install step in `.claude/hooks/session-start.sh`, and the stack's
-     package ecosystem in `.github/dependabot.yml`.
+   - The install step in `.claude/hooks/session-start.sh`, the stack's
+     package ecosystem in `.github/dependabot.yml`, and the toolchain's
+     entries in `.gitignore`.
+   - The stack's conventions in docs/testing.md "Organization" and
+     docs/documentation.md "Code".
 
    **Exit:**
 
@@ -87,7 +91,7 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
    ```
 
    Then set `SPEC.md`'s status to `building`.
-5. **Clean up:** delete this file, `modules/`, and the README banner.
+5. **Clean up:** delete this file and the README banner.
 6. **Audit.** The grep above returns nothing, and every relative link resolves
    ([`docs/documentation.md`](docs/documentation.md) "Doc audit").
 
@@ -95,7 +99,7 @@ grep -rnE '\{\{[A-Z_0-9]+\}\}|TEMPLATE:' --exclude-dir=.git .
 
 These enforce what the docs state; they're repository settings, not files.
 
-- [ ] **Labels:** `task`, `bug`, `documentation`, `plan`, `needs-discussion`.
+- [ ] **Labels:** `task`, `bug`, `plan`, `needs-discussion`.
 - [ ] **General → Pull Requests:** allow only **squash merging**, with the
       default commit message **"Pull request title and description"** — that
       is what makes each PR one legible commit on `main`. Turn on "Always
@@ -104,10 +108,12 @@ These enforce what the docs state; they're repository settings, not files.
 - [ ] **Branch ruleset on `main`:** require a pull request with **0 required
       approvals** (GitHub won't let you approve your own PR — for a solo
       maintainer, the merge is the review); require the `gate` and `pr-title`
-      status checks, with **"Require branches to be up to date before
-      merging"** — when several PRs are open, each merge makes the rest
-      re-test against the new `main` before they can land; require linear
-      history; block force pushes and deletion.
+      status checks; require linear history; block force pushes and
+      deletion. Leave **"Require branches to be up to date before merging"**
+      off: it makes every open PR re-run CI after each merge, and `gate`
+      already runs on every push to `main`
+      ([`docs/workflow.md`](docs/workflow.md) "Watching CI"). Turn it on if
+      `main` goes red from PRs that were each green alone.
 - [ ] **Actions:** default workflow permissions read-only.
 - [ ] **Security:** Dependabot version updates run from
       `.github/dependabot.yml` with no setting; turn on Dependabot alerts for
